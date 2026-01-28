@@ -5,6 +5,7 @@ import { auth } from "./lib/auth";
 import { toNodeHandler } from "better-auth/node";
 import notFound from "./middleware/notFound";
 import errorHandler from "./middleware/errorHandler";
+import { medicineRouter } from "./modules/medicine/medicine.routes";
 
 const app: Application = express();
 
@@ -26,6 +27,9 @@ app.get("/", (req: Request, res: Response) => {
     message: "Server has created successfully",
   });
 });
+
+// medicine route
+app.use("/api", medicineRouter);
 
 // handle errors
 app.use(notFound);

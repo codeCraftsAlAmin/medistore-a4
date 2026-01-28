@@ -27,19 +27,19 @@ export type AggregateMedicine = {
 }
 
 export type MedicineAvgAggregateOutputType = {
-  price: number | null
+  price: runtime.Decimal | null
   stock: number | null
 }
 
 export type MedicineSumAggregateOutputType = {
-  price: number | null
+  price: runtime.Decimal | null
   stock: number | null
 }
 
 export type MedicineMinAggregateOutputType = {
   id: string | null
   name: string | null
-  price: number | null
+  price: runtime.Decimal | null
   stock: number | null
   categoryId: string | null
   userId: string | null
@@ -50,7 +50,7 @@ export type MedicineMinAggregateOutputType = {
 export type MedicineMaxAggregateOutputType = {
   id: string | null
   name: string | null
-  price: number | null
+  price: runtime.Decimal | null
   stock: number | null
   categoryId: string | null
   userId: string | null
@@ -204,7 +204,7 @@ export type MedicineGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
 export type MedicineGroupByOutputType = {
   id: string
   name: string
-  price: number
+  price: runtime.Decimal
   stock: number
   categoryId: string
   userId: string
@@ -238,7 +238,7 @@ export type MedicineWhereInput = {
   NOT?: Prisma.MedicineWhereInput | Prisma.MedicineWhereInput[]
   id?: Prisma.StringFilter<"Medicine"> | string
   name?: Prisma.StringFilter<"Medicine"> | string
-  price?: Prisma.IntFilter<"Medicine"> | number
+  price?: Prisma.DecimalFilter<"Medicine"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: Prisma.IntFilter<"Medicine"> | number
   categoryId?: Prisma.StringFilter<"Medicine"> | string
   userId?: Prisma.StringFilter<"Medicine"> | string
@@ -271,7 +271,7 @@ export type MedicineWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.MedicineWhereInput[]
   NOT?: Prisma.MedicineWhereInput | Prisma.MedicineWhereInput[]
   name?: Prisma.StringFilter<"Medicine"> | string
-  price?: Prisma.IntFilter<"Medicine"> | number
+  price?: Prisma.DecimalFilter<"Medicine"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: Prisma.IntFilter<"Medicine"> | number
   categoryId?: Prisma.StringFilter<"Medicine"> | string
   userId?: Prisma.StringFilter<"Medicine"> | string
@@ -305,7 +305,7 @@ export type MedicineScalarWhereWithAggregatesInput = {
   NOT?: Prisma.MedicineScalarWhereWithAggregatesInput | Prisma.MedicineScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Medicine"> | string
   name?: Prisma.StringWithAggregatesFilter<"Medicine"> | string
-  price?: Prisma.IntWithAggregatesFilter<"Medicine"> | number
+  price?: Prisma.DecimalWithAggregatesFilter<"Medicine"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: Prisma.IntWithAggregatesFilter<"Medicine"> | number
   categoryId?: Prisma.StringWithAggregatesFilter<"Medicine"> | string
   userId?: Prisma.StringWithAggregatesFilter<"Medicine"> | string
@@ -316,7 +316,7 @@ export type MedicineScalarWhereWithAggregatesInput = {
 export type MedicineCreateInput = {
   id?: string
   name: string
-  price?: number
+  price?: runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -329,7 +329,7 @@ export type MedicineCreateInput = {
 export type MedicineUncheckedCreateInput = {
   id?: string
   name: string
-  price?: number
+  price?: runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: number
   categoryId: string
   userId: string
@@ -342,7 +342,7 @@ export type MedicineUncheckedCreateInput = {
 export type MedicineUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.IntFieldUpdateOperationsInput | number
+  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -355,7 +355,7 @@ export type MedicineUpdateInput = {
 export type MedicineUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.IntFieldUpdateOperationsInput | number
+  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -368,7 +368,7 @@ export type MedicineUncheckedUpdateInput = {
 export type MedicineCreateManyInput = {
   id?: string
   name: string
-  price?: number
+  price?: runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: number
   categoryId: string
   userId: string
@@ -379,7 +379,7 @@ export type MedicineCreateManyInput = {
 export type MedicineUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.IntFieldUpdateOperationsInput | number
+  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -388,7 +388,7 @@ export type MedicineUpdateManyMutationInput = {
 export type MedicineUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.IntFieldUpdateOperationsInput | number
+  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -538,6 +538,14 @@ export type MedicineUncheckedUpdateManyWithoutCategoryNestedInput = {
   deleteMany?: Prisma.MedicineScalarWhereInput | Prisma.MedicineScalarWhereInput[]
 }
 
+export type DecimalFieldUpdateOperationsInput = {
+  set?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
+}
+
 export type IntFieldUpdateOperationsInput = {
   set?: number
   increment?: number
@@ -577,7 +585,7 @@ export type MedicineUpdateOneRequiredWithoutReviewsNestedInput = {
 export type MedicineCreateWithoutUserInput = {
   id?: string
   name: string
-  price?: number
+  price?: runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -589,7 +597,7 @@ export type MedicineCreateWithoutUserInput = {
 export type MedicineUncheckedCreateWithoutUserInput = {
   id?: string
   name: string
-  price?: number
+  price?: runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: number
   categoryId: string
   createdAt?: Date | string
@@ -630,7 +638,7 @@ export type MedicineScalarWhereInput = {
   NOT?: Prisma.MedicineScalarWhereInput | Prisma.MedicineScalarWhereInput[]
   id?: Prisma.StringFilter<"Medicine"> | string
   name?: Prisma.StringFilter<"Medicine"> | string
-  price?: Prisma.IntFilter<"Medicine"> | number
+  price?: Prisma.DecimalFilter<"Medicine"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: Prisma.IntFilter<"Medicine"> | number
   categoryId?: Prisma.StringFilter<"Medicine"> | string
   userId?: Prisma.StringFilter<"Medicine"> | string
@@ -641,7 +649,7 @@ export type MedicineScalarWhereInput = {
 export type MedicineCreateWithoutCategoryInput = {
   id?: string
   name: string
-  price?: number
+  price?: runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -653,7 +661,7 @@ export type MedicineCreateWithoutCategoryInput = {
 export type MedicineUncheckedCreateWithoutCategoryInput = {
   id?: string
   name: string
-  price?: number
+  price?: runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: number
   userId: string
   createdAt?: Date | string
@@ -691,7 +699,7 @@ export type MedicineUpdateManyWithWhereWithoutCategoryInput = {
 export type MedicineCreateWithoutOrderItemsInput = {
   id?: string
   name: string
-  price?: number
+  price?: runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -703,7 +711,7 @@ export type MedicineCreateWithoutOrderItemsInput = {
 export type MedicineUncheckedCreateWithoutOrderItemsInput = {
   id?: string
   name: string
-  price?: number
+  price?: runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: number
   categoryId: string
   userId: string
@@ -731,7 +739,7 @@ export type MedicineUpdateToOneWithWhereWithoutOrderItemsInput = {
 export type MedicineUpdateWithoutOrderItemsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.IntFieldUpdateOperationsInput | number
+  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -743,7 +751,7 @@ export type MedicineUpdateWithoutOrderItemsInput = {
 export type MedicineUncheckedUpdateWithoutOrderItemsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.IntFieldUpdateOperationsInput | number
+  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -755,7 +763,7 @@ export type MedicineUncheckedUpdateWithoutOrderItemsInput = {
 export type MedicineCreateWithoutReviewsInput = {
   id?: string
   name: string
-  price?: number
+  price?: runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -767,7 +775,7 @@ export type MedicineCreateWithoutReviewsInput = {
 export type MedicineUncheckedCreateWithoutReviewsInput = {
   id?: string
   name: string
-  price?: number
+  price?: runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: number
   categoryId: string
   userId: string
@@ -795,7 +803,7 @@ export type MedicineUpdateToOneWithWhereWithoutReviewsInput = {
 export type MedicineUpdateWithoutReviewsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.IntFieldUpdateOperationsInput | number
+  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -807,7 +815,7 @@ export type MedicineUpdateWithoutReviewsInput = {
 export type MedicineUncheckedUpdateWithoutReviewsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.IntFieldUpdateOperationsInput | number
+  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -819,7 +827,7 @@ export type MedicineUncheckedUpdateWithoutReviewsInput = {
 export type MedicineCreateManyUserInput = {
   id?: string
   name: string
-  price?: number
+  price?: runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: number
   categoryId: string
   createdAt?: Date | string
@@ -829,7 +837,7 @@ export type MedicineCreateManyUserInput = {
 export type MedicineUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.IntFieldUpdateOperationsInput | number
+  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -841,7 +849,7 @@ export type MedicineUpdateWithoutUserInput = {
 export type MedicineUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.IntFieldUpdateOperationsInput | number
+  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -853,7 +861,7 @@ export type MedicineUncheckedUpdateWithoutUserInput = {
 export type MedicineUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.IntFieldUpdateOperationsInput | number
+  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -863,7 +871,7 @@ export type MedicineUncheckedUpdateManyWithoutUserInput = {
 export type MedicineCreateManyCategoryInput = {
   id?: string
   name: string
-  price?: number
+  price?: runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: number
   userId: string
   createdAt?: Date | string
@@ -873,7 +881,7 @@ export type MedicineCreateManyCategoryInput = {
 export type MedicineUpdateWithoutCategoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.IntFieldUpdateOperationsInput | number
+  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -885,7 +893,7 @@ export type MedicineUpdateWithoutCategoryInput = {
 export type MedicineUncheckedUpdateWithoutCategoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.IntFieldUpdateOperationsInput | number
+  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -897,7 +905,7 @@ export type MedicineUncheckedUpdateWithoutCategoryInput = {
 export type MedicineUncheckedUpdateManyWithoutCategoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.IntFieldUpdateOperationsInput | number
+  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1025,7 +1033,7 @@ export type $MedicinePayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     name: string
-    price: number
+    price: runtime.Decimal
     stock: number
     categoryId: string
     userId: string
@@ -1460,7 +1468,7 @@ export interface Prisma__MedicineClient<T, Null = never, ExtArgs extends runtime
 export interface MedicineFieldRefs {
   readonly id: Prisma.FieldRef<"Medicine", 'String'>
   readonly name: Prisma.FieldRef<"Medicine", 'String'>
-  readonly price: Prisma.FieldRef<"Medicine", 'Int'>
+  readonly price: Prisma.FieldRef<"Medicine", 'Decimal'>
   readonly stock: Prisma.FieldRef<"Medicine", 'Int'>
   readonly categoryId: Prisma.FieldRef<"Medicine", 'String'>
   readonly userId: Prisma.FieldRef<"Medicine", 'String'>

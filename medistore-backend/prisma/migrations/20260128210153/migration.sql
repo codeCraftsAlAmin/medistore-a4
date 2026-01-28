@@ -79,7 +79,7 @@ CREATE TABLE "category" (
 CREATE TABLE "medicine" (
     "id" TEXT NOT NULL,
     "name" VARCHAR(50) NOT NULL,
-    "price" INTEGER NOT NULL DEFAULT 0,
+    "price" DECIMAL(10,2) NOT NULL DEFAULT 0.00,
     "stock" INTEGER NOT NULL DEFAULT 0,
     "categoryId" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
@@ -92,7 +92,7 @@ CREATE TABLE "medicine" (
 -- CreateTable
 CREATE TABLE "order" (
     "id" TEXT NOT NULL,
-    "totalPrice" DOUBLE PRECISION NOT NULL DEFAULT 0,
+    "totalPrice" DECIMAL(10,2) NOT NULL DEFAULT 0,
     "status" "OrderStatus" NOT NULL DEFAULT 'PLACED',
     "address" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
@@ -107,7 +107,7 @@ CREATE TABLE "orderitem" (
     "id" TEXT NOT NULL,
     "orderId" TEXT NOT NULL,
     "medicineId" TEXT NOT NULL,
-    "priceAtPurchase" DOUBLE PRECISION NOT NULL DEFAULT 0,
+    "priceAtPurchase" DECIMAL(10,2) NOT NULL DEFAULT 0,
     "quantity" INTEGER NOT NULL DEFAULT 0,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,

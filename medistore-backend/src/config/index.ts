@@ -20,6 +20,10 @@ const config = {
     client_id: process.env.CLIENT_ID || "",
     client_secret: process.env.CLIENT_SECRET || "",
   },
+  node_mailer: {
+    google_account: process.env.GOOGLE_ACC || "",
+    google_pass: process.env.GOOGLE_PASS || "",
+  },
 };
 
 export default config;

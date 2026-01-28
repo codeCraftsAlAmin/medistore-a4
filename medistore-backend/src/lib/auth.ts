@@ -2,6 +2,7 @@ import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { prisma } from "./prisma";
 import config from "../config";
+import { sendEmail } from "./sendEmail";
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
@@ -15,6 +16,11 @@ export const auth = betterAuth({
         required: false,
         defaultValue: "CUSTOMER",
       },
+      status: {
+        type: ["BAN", "UNBAN"],
+        required: false,
+        defaultValue: "UNBAN",
+      },
     },
   },
   trustedOrigins: [config.urls.frontend_url],
@@ -27,6 +33,10 @@ export const auth = betterAuth({
   emailVerification: {
     autoSignInAfterVerification: true,
     sendOnSignIn: true, // send email wihile signing up
+    verifyEmailRedirectPath: "/login?verified=true",
+    sendVerificationEmail: async ({ user, url }) => {
+      sendEmail({ user, url });
+    },
   },
   // # gmail verification
   socialProviders: {

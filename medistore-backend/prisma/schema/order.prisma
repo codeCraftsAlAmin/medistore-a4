@@ -1,6 +1,6 @@
 model Order {
     id         String      @id @default(uuid())
-    totalPrice Float       @default(0)
+    totalPrice Decimal      @db.Decimal(10,2) @default(0)
     status     OrderStatus @default(PLACED)
     address    String
     user       User        @relation(fields: [userId], references: [id])
