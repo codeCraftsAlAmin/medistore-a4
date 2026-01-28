@@ -8,8 +8,8 @@
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
     "module": "ESNext",
-    "target": "ES2020",
-    "types": [],
+    "target": "ES2023",
+    "types": ["node"],
     // For nodejs:
     // "lib": ["esnext"],
     // "types": ["node"],
@@ -41,8 +41,9 @@
     "moduleDetection": "force",
     "moduleResolution": "node",
     "esModuleInterop": true,
+    // "ignoreDeprecations": "6.0",
     "skipLibCheck": true
   },
-  "include": ["src/**/*", "src/lib"],
+  "include": ["**/*.ts"],
   "exclude": ["node_modules", "dist", "generated/prisma"]
 }

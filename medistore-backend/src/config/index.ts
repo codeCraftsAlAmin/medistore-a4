@@ -16,6 +16,10 @@ const config = {
     better_auth_sec: process.env.BETTER_AUTH_SECRET || "",
     better_auth_url: process.env.BETTER_AUTH_URL || "",
   },
+  google_credentials: {
+    client_id: process.env.CLIENT_ID || "",
+    client_secret: process.env.CLIENT_SECRET || "",
+  },
 };
 
 export default config;

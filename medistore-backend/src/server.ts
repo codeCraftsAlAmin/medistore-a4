@@ -1,10 +1,13 @@
 import app from "./app";
 import config from "./config";
+import { prisma } from "./lib/prisma";
 
 const port = config.server.port;
 
 async function main() {
   try {
+    await prisma.$connect();
+    console.log("Successfully connected ~🎉");
     app.listen(port, () => {
       console.log(`Server is running on ~🚀 http://localhost:${port}`);
     });
