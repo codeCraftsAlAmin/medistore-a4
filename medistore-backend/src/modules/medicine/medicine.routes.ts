@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.post(
   "/medicine",
-  authentication(UserRole.SELLER, UserRole.ADMIN),
+  authentication(UserRole.SELLER),
   medicineController.createMedicine,
 );
 

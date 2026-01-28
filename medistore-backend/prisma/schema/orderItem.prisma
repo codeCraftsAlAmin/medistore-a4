@@ -4,7 +4,7 @@ model OrderItem {
     orderId         String
     medicine        Medicine @relation(fields: [medicineId], references: [id])
     medicineId      String
-    priceAtPurchase Decimal  @default(0) @db.Decimal(10, 2)
+    priceAtPurchase Int      @default(0)
     quantity        Int      @default(0)
     createdAt       DateTime @default(now())
     updatedAt       DateTime @updatedAt
