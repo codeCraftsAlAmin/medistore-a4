@@ -18,6 +18,14 @@ export const UserRole = {
 export type UserRole = (typeof UserRole)[keyof typeof UserRole]
 
 
+export const UserStatus = {
+  BAN: 'BAN',
+  UNBAN: 'UNBAN'
+} as const
+
+export type UserStatus = (typeof UserStatus)[keyof typeof UserStatus]
+
+
 export const OrderStatus = {
   PLACED: 'PLACED',
   PROCESSING: 'PROCESSING',

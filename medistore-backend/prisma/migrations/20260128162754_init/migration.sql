@@ -2,6 +2,9 @@
 CREATE TYPE "UserRole" AS ENUM ('ADMIN', 'CUSTOMER', 'SELLER');
 
 -- CreateEnum
+CREATE TYPE "UserStatus" AS ENUM ('BAN', 'UNBAN');
+
+-- CreateEnum
 CREATE TYPE "OrderStatus" AS ENUM ('PLACED', 'PROCESSING', 'SHIPPED', 'DELIVERED', 'CANCELLED');
 
 -- CreateTable
@@ -12,6 +15,7 @@ CREATE TABLE "user" (
     "emailVerified" BOOLEAN NOT NULL DEFAULT false,
     "image" TEXT,
     "role" "UserRole" NOT NULL DEFAULT 'CUSTOMER',
+    "status" "UserStatus" NOT NULL DEFAULT 'UNBAN',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 

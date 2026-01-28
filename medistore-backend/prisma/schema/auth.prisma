@@ -4,6 +4,11 @@ enum UserRole {
     SELLER
 }
 
+enum UserStatus {
+    BAN
+    UNBAN
+}
+
 model User {
     id            String     @id
     name          String
@@ -11,6 +16,7 @@ model User {
     emailVerified Boolean    @default(false)
     image         String?
     role          UserRole   @default(CUSTOMER)
+    status        UserStatus @default(UNBAN)
     createdAt     DateTime   @default(now())
     updatedAt     DateTime   @updatedAt
     sessions      Session[]
