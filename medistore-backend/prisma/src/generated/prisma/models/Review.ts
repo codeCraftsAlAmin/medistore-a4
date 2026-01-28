@@ -232,7 +232,7 @@ export type ReviewWhereInput = {
   medicineId?: Prisma.StringFilter<"Review"> | string
   createdAt?: Prisma.DateTimeFilter<"Review"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Review"> | Date | string
-  medicine?: Prisma.XOR<Prisma.MedicinesScalarRelationFilter, Prisma.MedicinesWhereInput>
+  medicine?: Prisma.XOR<Prisma.MedicineScalarRelationFilter, Prisma.MedicineWhereInput>
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
@@ -244,7 +244,7 @@ export type ReviewOrderByWithRelationInput = {
   medicineId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  medicine?: Prisma.MedicinesOrderByWithRelationInput
+  medicine?: Prisma.MedicineOrderByWithRelationInput
   user?: Prisma.UserOrderByWithRelationInput
 }
 
@@ -259,7 +259,7 @@ export type ReviewWhereUniqueInput = Prisma.AtLeast<{
   medicineId?: Prisma.StringFilter<"Review"> | string
   createdAt?: Prisma.DateTimeFilter<"Review"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Review"> | Date | string
-  medicine?: Prisma.XOR<Prisma.MedicinesScalarRelationFilter, Prisma.MedicinesWhereInput>
+  medicine?: Prisma.XOR<Prisma.MedicineScalarRelationFilter, Prisma.MedicineWhereInput>
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id">
 
@@ -297,7 +297,7 @@ export type ReviewCreateInput = {
   comment: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  medicine: Prisma.MedicinesCreateNestedOneWithoutReviewsInput
+  medicine: Prisma.MedicineCreateNestedOneWithoutReviewsInput
   user: Prisma.UserCreateNestedOneWithoutReviewsInput
 }
 
@@ -317,7 +317,7 @@ export type ReviewUpdateInput = {
   comment?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  medicine?: Prisma.MedicinesUpdateOneRequiredWithoutReviewsNestedInput
+  medicine?: Prisma.MedicineUpdateOneRequiredWithoutReviewsNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutReviewsNestedInput
 }
 
@@ -497,7 +497,7 @@ export type ReviewCreateWithoutUserInput = {
   comment: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  medicine: Prisma.MedicinesCreateNestedOneWithoutReviewsInput
+  medicine: Prisma.MedicineCreateNestedOneWithoutReviewsInput
 }
 
 export type ReviewUncheckedCreateWithoutUserInput = {
@@ -607,7 +607,7 @@ export type ReviewUpdateWithoutUserInput = {
   comment?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  medicine?: Prisma.MedicinesUpdateOneRequiredWithoutReviewsNestedInput
+  medicine?: Prisma.MedicineUpdateOneRequiredWithoutReviewsNestedInput
 }
 
 export type ReviewUncheckedUpdateWithoutUserInput = {
@@ -674,7 +674,7 @@ export type ReviewSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   medicineId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  medicine?: boolean | Prisma.MedicinesDefaultArgs<ExtArgs>
+  medicine?: boolean | Prisma.MedicineDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["review"]>
 
@@ -686,7 +686,7 @@ export type ReviewSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   medicineId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  medicine?: boolean | Prisma.MedicinesDefaultArgs<ExtArgs>
+  medicine?: boolean | Prisma.MedicineDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["review"]>
 
@@ -698,7 +698,7 @@ export type ReviewSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   medicineId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  medicine?: boolean | Prisma.MedicinesDefaultArgs<ExtArgs>
+  medicine?: boolean | Prisma.MedicineDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["review"]>
 
@@ -714,22 +714,22 @@ export type ReviewSelectScalar = {
 
 export type ReviewOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "rating" | "comment" | "userId" | "medicineId" | "createdAt" | "updatedAt", ExtArgs["result"]["review"]>
 export type ReviewInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  medicine?: boolean | Prisma.MedicinesDefaultArgs<ExtArgs>
+  medicine?: boolean | Prisma.MedicineDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type ReviewIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  medicine?: boolean | Prisma.MedicinesDefaultArgs<ExtArgs>
+  medicine?: boolean | Prisma.MedicineDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type ReviewIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  medicine?: boolean | Prisma.MedicinesDefaultArgs<ExtArgs>
+  medicine?: boolean | Prisma.MedicineDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
 export type $ReviewPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Review"
   objects: {
-    medicine: Prisma.$MedicinesPayload<ExtArgs>
+    medicine: Prisma.$MedicinePayload<ExtArgs>
     user: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1134,7 +1134,7 @@ readonly fields: ReviewFieldRefs;
  */
 export interface Prisma__ReviewClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  medicine<T extends Prisma.MedicinesDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MedicinesDefaultArgs<ExtArgs>>): Prisma.Prisma__MedicinesClient<runtime.Types.Result.GetResult<Prisma.$MedicinesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  medicine<T extends Prisma.MedicineDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MedicineDefaultArgs<ExtArgs>>): Prisma.Prisma__MedicineClient<runtime.Types.Result.GetResult<Prisma.$MedicinePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.

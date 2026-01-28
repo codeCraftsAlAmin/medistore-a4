@@ -65,10 +65,10 @@ export type Verification = Prisma.VerificationModel
  */
 export type Category = Prisma.CategoryModel
 /**
- * Model Medicines
+ * Model Medicine
  * 
  */
-export type Medicines = Prisma.MedicinesModel
+export type Medicine = Prisma.MedicineModel
 /**
  * Model Review
  * 
@@ -80,7 +80,7 @@ export type Review = Prisma.ReviewModel
  */
 export type Order = Prisma.OrderModel
 /**
- * Model OrderItems
+ * Model OrderItem
  * 
  */
-export type OrderItems = Prisma.OrderItemsModel
+export type OrderItem = Prisma.OrderItemModel

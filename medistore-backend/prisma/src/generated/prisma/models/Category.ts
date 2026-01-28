@@ -158,13 +158,13 @@ export type CategoryWhereInput = {
   NOT?: Prisma.CategoryWhereInput | Prisma.CategoryWhereInput[]
   id?: Prisma.StringFilter<"Category"> | string
   name?: Prisma.StringFilter<"Category"> | string
-  medicines?: Prisma.MedicinesListRelationFilter
+  medicine?: Prisma.MedicineListRelationFilter
 }
 
 export type CategoryOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  medicines?: Prisma.MedicinesOrderByRelationAggregateInput
+  medicine?: Prisma.MedicineOrderByRelationAggregateInput
 }
 
 export type CategoryWhereUniqueInput = Prisma.AtLeast<{
@@ -173,7 +173,7 @@ export type CategoryWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.CategoryWhereInput[]
   NOT?: Prisma.CategoryWhereInput | Prisma.CategoryWhereInput[]
   name?: Prisma.StringFilter<"Category"> | string
-  medicines?: Prisma.MedicinesListRelationFilter
+  medicine?: Prisma.MedicineListRelationFilter
 }, "id">
 
 export type CategoryOrderByWithAggregationInput = {
@@ -195,25 +195,25 @@ export type CategoryScalarWhereWithAggregatesInput = {
 export type CategoryCreateInput = {
   id?: string
   name: string
-  medicines?: Prisma.MedicinesCreateNestedManyWithoutCategoryInput
+  medicine?: Prisma.MedicineCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUncheckedCreateInput = {
   id?: string
   name: string
-  medicines?: Prisma.MedicinesUncheckedCreateNestedManyWithoutCategoryInput
+  medicine?: Prisma.MedicineUncheckedCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  medicines?: Prisma.MedicinesUpdateManyWithoutCategoryNestedInput
+  medicine?: Prisma.MedicineUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  medicines?: Prisma.MedicinesUncheckedUpdateManyWithoutCategoryNestedInput
+  medicine?: Prisma.MedicineUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryCreateManyInput = {
@@ -251,52 +251,52 @@ export type CategoryScalarRelationFilter = {
   isNot?: Prisma.CategoryWhereInput
 }
 
-export type CategoryCreateNestedOneWithoutMedicinesInput = {
-  create?: Prisma.XOR<Prisma.CategoryCreateWithoutMedicinesInput, Prisma.CategoryUncheckedCreateWithoutMedicinesInput>
-  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutMedicinesInput
+export type CategoryCreateNestedOneWithoutMedicineInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutMedicineInput, Prisma.CategoryUncheckedCreateWithoutMedicineInput>
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutMedicineInput
   connect?: Prisma.CategoryWhereUniqueInput
 }
 
-export type CategoryUpdateOneRequiredWithoutMedicinesNestedInput = {
-  create?: Prisma.XOR<Prisma.CategoryCreateWithoutMedicinesInput, Prisma.CategoryUncheckedCreateWithoutMedicinesInput>
-  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutMedicinesInput
-  upsert?: Prisma.CategoryUpsertWithoutMedicinesInput
+export type CategoryUpdateOneRequiredWithoutMedicineNestedInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutMedicineInput, Prisma.CategoryUncheckedCreateWithoutMedicineInput>
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutMedicineInput
+  upsert?: Prisma.CategoryUpsertWithoutMedicineInput
   connect?: Prisma.CategoryWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.CategoryUpdateToOneWithWhereWithoutMedicinesInput, Prisma.CategoryUpdateWithoutMedicinesInput>, Prisma.CategoryUncheckedUpdateWithoutMedicinesInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CategoryUpdateToOneWithWhereWithoutMedicineInput, Prisma.CategoryUpdateWithoutMedicineInput>, Prisma.CategoryUncheckedUpdateWithoutMedicineInput>
 }
 
-export type CategoryCreateWithoutMedicinesInput = {
+export type CategoryCreateWithoutMedicineInput = {
   id?: string
   name: string
 }
 
-export type CategoryUncheckedCreateWithoutMedicinesInput = {
+export type CategoryUncheckedCreateWithoutMedicineInput = {
   id?: string
   name: string
 }
 
-export type CategoryCreateOrConnectWithoutMedicinesInput = {
+export type CategoryCreateOrConnectWithoutMedicineInput = {
   where: Prisma.CategoryWhereUniqueInput
-  create: Prisma.XOR<Prisma.CategoryCreateWithoutMedicinesInput, Prisma.CategoryUncheckedCreateWithoutMedicinesInput>
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutMedicineInput, Prisma.CategoryUncheckedCreateWithoutMedicineInput>
 }
 
-export type CategoryUpsertWithoutMedicinesInput = {
-  update: Prisma.XOR<Prisma.CategoryUpdateWithoutMedicinesInput, Prisma.CategoryUncheckedUpdateWithoutMedicinesInput>
-  create: Prisma.XOR<Prisma.CategoryCreateWithoutMedicinesInput, Prisma.CategoryUncheckedCreateWithoutMedicinesInput>
+export type CategoryUpsertWithoutMedicineInput = {
+  update: Prisma.XOR<Prisma.CategoryUpdateWithoutMedicineInput, Prisma.CategoryUncheckedUpdateWithoutMedicineInput>
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutMedicineInput, Prisma.CategoryUncheckedCreateWithoutMedicineInput>
   where?: Prisma.CategoryWhereInput
 }
 
-export type CategoryUpdateToOneWithWhereWithoutMedicinesInput = {
+export type CategoryUpdateToOneWithWhereWithoutMedicineInput = {
   where?: Prisma.CategoryWhereInput
-  data: Prisma.XOR<Prisma.CategoryUpdateWithoutMedicinesInput, Prisma.CategoryUncheckedUpdateWithoutMedicinesInput>
+  data: Prisma.XOR<Prisma.CategoryUpdateWithoutMedicineInput, Prisma.CategoryUncheckedUpdateWithoutMedicineInput>
 }
 
-export type CategoryUpdateWithoutMedicinesInput = {
+export type CategoryUpdateWithoutMedicineInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
-export type CategoryUncheckedUpdateWithoutMedicinesInput = {
+export type CategoryUncheckedUpdateWithoutMedicineInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
 }
@@ -307,11 +307,11 @@ export type CategoryUncheckedUpdateWithoutMedicinesInput = {
  */
 
 export type CategoryCountOutputType = {
-  medicines: number
+  medicine: number
 }
 
 export type CategoryCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  medicines?: boolean | CategoryCountOutputTypeCountMedicinesArgs
+  medicine?: boolean | CategoryCountOutputTypeCountMedicineArgs
 }
 
 /**
@@ -327,15 +327,15 @@ export type CategoryCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Ext
 /**
  * CategoryCountOutputType without action
  */
-export type CategoryCountOutputTypeCountMedicinesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.MedicinesWhereInput
+export type CategoryCountOutputTypeCountMedicineArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MedicineWhereInput
 }
 
 
 export type CategorySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
-  medicines?: boolean | Prisma.Category$medicinesArgs<ExtArgs>
+  medicine?: boolean | Prisma.Category$medicineArgs<ExtArgs>
   _count?: boolean | Prisma.CategoryCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["category"]>
 
@@ -356,7 +356,7 @@ export type CategorySelectScalar = {
 
 export type CategoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name", ExtArgs["result"]["category"]>
 export type CategoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  medicines?: boolean | Prisma.Category$medicinesArgs<ExtArgs>
+  medicine?: boolean | Prisma.Category$medicineArgs<ExtArgs>
   _count?: boolean | Prisma.CategoryCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CategoryIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -365,7 +365,7 @@ export type CategoryIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
 export type $CategoryPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Category"
   objects: {
-    medicines: Prisma.$MedicinesPayload<ExtArgs>[]
+    medicine: Prisma.$MedicinePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -764,7 +764,7 @@ readonly fields: CategoryFieldRefs;
  */
 export interface Prisma__CategoryClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  medicines<T extends Prisma.Category$medicinesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$medicinesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MedicinesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  medicine<T extends Prisma.Category$medicineArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$medicineArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MedicinePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1184,27 +1184,27 @@ export type CategoryDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
 }
 
 /**
- * Category.medicines
+ * Category.medicine
  */
-export type Category$medicinesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Category$medicineArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Medicines
+   * Select specific fields to fetch from the Medicine
    */
-  select?: Prisma.MedicinesSelect<ExtArgs> | null
+  select?: Prisma.MedicineSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Medicines
+   * Omit specific fields from the Medicine
    */
-  omit?: Prisma.MedicinesOmit<ExtArgs> | null
+  omit?: Prisma.MedicineOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.MedicinesInclude<ExtArgs> | null
-  where?: Prisma.MedicinesWhereInput
-  orderBy?: Prisma.MedicinesOrderByWithRelationInput | Prisma.MedicinesOrderByWithRelationInput[]
-  cursor?: Prisma.MedicinesWhereUniqueInput
+  include?: Prisma.MedicineInclude<ExtArgs> | null
+  where?: Prisma.MedicineWhereInput
+  orderBy?: Prisma.MedicineOrderByWithRelationInput | Prisma.MedicineOrderByWithRelationInput[]
+  cursor?: Prisma.MedicineWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.MedicinesScalarFieldEnum | Prisma.MedicinesScalarFieldEnum[]
+  distinct?: Prisma.MedicineScalarFieldEnum | Prisma.MedicineScalarFieldEnum[]
 }
 
 /**

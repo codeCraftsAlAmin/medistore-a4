@@ -56,10 +56,10 @@ export const ModelName = {
   Account: 'Account',
   Verification: 'Verification',
   Category: 'Category',
-  Medicines: 'Medicines',
+  Medicine: 'Medicine',
   Review: 'Review',
   Order: 'Order',
-  OrderItems: 'OrderItems'
+  OrderItem: 'OrderItem'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -145,7 +145,7 @@ export const CategoryScalarFieldEnum = {
 export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
 
 
-export const MedicinesScalarFieldEnum = {
+export const MedicineScalarFieldEnum = {
   id: 'id',
   name: 'name',
   price: 'price',
@@ -156,7 +156,7 @@ export const MedicinesScalarFieldEnum = {
   updatedAt: 'updatedAt'
 } as const
 
-export type MedicinesScalarFieldEnum = (typeof MedicinesScalarFieldEnum)[keyof typeof MedicinesScalarFieldEnum]
+export type MedicineScalarFieldEnum = (typeof MedicineScalarFieldEnum)[keyof typeof MedicineScalarFieldEnum]
 
 
 export const ReviewScalarFieldEnum = {
@@ -185,7 +185,7 @@ export const OrderScalarFieldEnum = {
 export type OrderScalarFieldEnum = (typeof OrderScalarFieldEnum)[keyof typeof OrderScalarFieldEnum]
 
 
-export const OrderItemsScalarFieldEnum = {
+export const OrderItemScalarFieldEnum = {
   id: 'id',
   orderId: 'orderId',
   medicineId: 'medicineId',
@@ -195,7 +195,7 @@ export const OrderItemsScalarFieldEnum = {
   updatedAt: 'updatedAt'
 } as const
 
-export type OrderItemsScalarFieldEnum = (typeof OrderItemsScalarFieldEnum)[keyof typeof OrderItemsScalarFieldEnum]
+export type OrderItemScalarFieldEnum = (typeof OrderItemScalarFieldEnum)[keyof typeof OrderItemScalarFieldEnum]
 
 
 export const SortOrder = {
