@@ -1,6 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import { medicineService } from "./medicine.service";
 import { UserType } from "../../types";
+import sortingAndPagination, {
+  IOptionsResult,
+} from "../../helper/sortingAndPagination";
 
 const createMedicine = async (
   req: Request,
@@ -29,14 +32,17 @@ const getMedicines = async (
   next: NextFunction,
 ) => {
   try {
-    const { search, price, stock, manufacturer } = req.query;
+    const options = sortingAndPagination(req.query);
 
-    const data = await medicineService.getMedicinesHandler(
-      search as string,
-      price as string,
-      stock as string,
-      manufacturer as string,
-    );
+    const filters = {
+      search: req.query.search as string,
+      price: req.query.price as string,
+      stock: req.query.stock as string,
+      manufacturer: req.query.manufacturer as string,
+      category: req.query.category as string,
+    };
+
+    const data = await medicineService.getMedicinesHandler(filters, options);
 
     res.status(200).json({
       ok: true,

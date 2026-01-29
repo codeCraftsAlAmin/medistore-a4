@@ -1,3 +1,4 @@
+import { IOptionsResult } from "../../helper/sortingAndPagination";
 import { prisma } from "../../lib/prisma";
 import { MedicineType, UserType } from "../../types";
 
@@ -37,11 +38,18 @@ const createMedicineHandler = async (payload: MedicineType, user: UserType) => {
 };
 
 const getMedicinesHandler = async (
-  search: string,
-  price: string,
-  stock: string,
-  manufacturer: string,
+  filtersParams: {
+    search?: string;
+    price?: string;
+    stock?: string;
+    manufacturer?: string;
+    category?: string;
+  },
+  options: IOptionsResult,
 ) => {
+  const { search, price, stock, manufacturer, category } = filtersParams;
+  const { page, limit, skipPage, sortBy, sortOrder } = options;
+
   const conditions: any[] = [];
 
   // search by name-- partial searching
@@ -83,15 +91,45 @@ const getMedicinesHandler = async (
   }
 
   const data = await prisma.medicine.findMany({
-    where:
-      conditions.length > 0
+    where: {
+      AND: conditions.length > 0 ? conditions : [],
+    },
+
+    // paginations
+    skip: Number(skipPage) || 0,
+    take: Number(limit) || 5,
+
+    // sorting
+    orderBy:
+      sortBy && sortOrder
         ? {
-            AND: conditions,
+            [sortBy]: sortOrder,
           }
-        : {},
+        : { createdAt: "desc" },
+
+    include: {
+      category: { select: { name: true } },
+      _count: {
+        select: { reviews: true },
+      },
+    },
   });
 
-  return data;
+  const total = await prisma.medicine.count({
+    where: {
+      AND: conditions.length > 0 ? conditions : {},
+    },
+  });
+
+  return {
+    data,
+    paginations: {
+      page,
+      limit,
+      total,
+      totalPage: Math.ceil(total / (limit || 5)),
+    },
+  };
 };
 
 const updateMedicineHandler = async (
