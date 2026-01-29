@@ -10,7 +10,7 @@ const createMedicine = async (payload: MedicineType, user: UserType) => {
 
   const isCategory = await prisma.category.findFirst({
     where: {
-      name: category as string,
+      name: category,
     },
   });
 
@@ -28,7 +28,7 @@ const createMedicine = async (payload: MedicineType, user: UserType) => {
       },
       user: {
         connect: { id: user?.id },
-      }
+      },
     },
   });
 

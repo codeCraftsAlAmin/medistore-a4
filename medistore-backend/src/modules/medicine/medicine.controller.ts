@@ -1,6 +1,4 @@
 import { NextFunction, Request, Response } from "express";
-import { prisma } from "../../lib/prisma";
-import { connect } from "node:http2";
 import { medicineService } from "./medicine.service";
 import { UserType } from "../../types";
 
@@ -17,7 +15,7 @@ const createMedicine = async (
 
     res.status(200).json({
       ok: true,
-      message: "Everthing is fine in medicine route",
+      message: "Data created successfully",
       result,
     });
   } catch (error) {
