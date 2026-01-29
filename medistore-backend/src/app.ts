@@ -6,6 +6,7 @@ import { toNodeHandler } from "better-auth/node";
 import notFound from "./middleware/notFound";
 import errorHandler from "./middleware/errorHandler";
 import { medicineRouter } from "./modules/medicine/medicine.routes";
+import { reviewRouter } from "./modules/review/review.route";
 
 const app: Application = express();
 
@@ -21,6 +22,7 @@ app.use(
   }),
 );
 
+// base route
 app.get("/", (req: Request, res: Response) => {
   res.status(200).json({
     ok: true,
@@ -30,6 +32,9 @@ app.get("/", (req: Request, res: Response) => {
 
 // medicine route
 app.use("/api", medicineRouter);
+
+// review route
+app.use("/api", reviewRouter);
 
 // handle errors
 app.use(notFound);

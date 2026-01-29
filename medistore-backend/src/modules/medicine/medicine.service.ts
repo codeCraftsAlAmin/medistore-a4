@@ -18,7 +18,7 @@ const createMedicineHandler = async (payload: MedicineType, user: UserType) => {
     throw new Error("Category not found, please create it first");
   }
 
-  const result = await prisma.medicine.create({
+  const data = await prisma.medicine.create({
     data: {
       name,
       price: Number(price),
@@ -33,7 +33,7 @@ const createMedicineHandler = async (payload: MedicineType, user: UserType) => {
     },
   });
 
-  return result;
+  return data;
 };
 
 const getMedicinesHandler = async (
@@ -82,7 +82,7 @@ const getMedicinesHandler = async (
     });
   }
 
-  const result = await prisma.medicine.findMany({
+  const data = await prisma.medicine.findMany({
     where:
       conditions.length > 0
         ? {
@@ -91,7 +91,7 @@ const getMedicinesHandler = async (
         : {},
   });
 
-  return result;
+  return data;
 };
 
 const updateMedicineHandler = async (
