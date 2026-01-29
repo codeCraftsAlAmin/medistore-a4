@@ -81,6 +81,7 @@ CREATE TABLE "medicine" (
     "name" VARCHAR(50) NOT NULL,
     "price" INTEGER NOT NULL DEFAULT 0,
     "stock" INTEGER NOT NULL DEFAULT 0,
+    "manufacturer" TEXT NOT NULL,
     "categoryId" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
