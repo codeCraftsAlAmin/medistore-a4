@@ -115,6 +115,7 @@ const getMedicinesHandler = async (
     },
   });
 
+  // total items
   const total = await prisma.medicine.count({
     where: {
       AND: conditions.length > 0 ? conditions : {},

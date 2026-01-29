@@ -7,6 +7,7 @@ import notFound from "./middleware/notFound";
 import errorHandler from "./middleware/errorHandler";
 import { medicineRouter } from "./modules/medicine/medicine.routes";
 import { reviewRouter } from "./modules/review/review.route";
+import { orderRouter } from "./modules/order/order.route";
 
 const app: Application = express();
 
@@ -35,6 +36,9 @@ app.use("/api", medicineRouter);
 
 // review route
 app.use("/api", reviewRouter);
+
+// order route
+app.use("/api", orderRouter);
 
 // handle errors
 app.use(notFound);
