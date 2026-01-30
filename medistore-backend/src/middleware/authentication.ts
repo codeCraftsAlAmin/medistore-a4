@@ -60,6 +60,12 @@ const authMiddleware = (...role: UserRole[]) => {
       });
     }
 
+    if (session?.user.status === "BAN") {
+      throw new Error(
+        "Your account has been suspended by the administration. Please contact support for further assistance.",
+      );
+    }
+
     next();
   };
 };
