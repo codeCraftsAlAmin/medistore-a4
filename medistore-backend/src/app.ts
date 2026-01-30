@@ -8,6 +8,7 @@ import errorHandler from "./middleware/errorHandler";
 import { medicineRouter } from "./modules/medicine/medicine.routes";
 import { reviewRouter } from "./modules/review/review.route";
 import { orderRouter } from "./modules/order/order.route";
+import { userRouter } from "./modules/user/user.route";
 
 const app: Application = express();
 
@@ -39,6 +40,9 @@ app.use("/api", reviewRouter);
 
 // order route
 app.use("/api", orderRouter);
+
+// user route
+app.use("/api", userRouter);
 
 // handle errors
 app.use(notFound);

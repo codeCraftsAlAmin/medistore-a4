@@ -11,11 +11,18 @@ router.post(
   orderController.createOrder,
 );
 
-// get orders -- customer, admin
+// get orders -- customer, admin, seller
 router.get(
   "/order/",
-  authMiddleware(UserRole.CUSTOMER),
+  authMiddleware(UserRole.CUSTOMER, UserRole.SELLER, UserRole.ADMIN),
   orderController.getOrder,
+);
+
+// update order status -- seller
+router.put(
+  "/order/:id",
+  authMiddleware(UserRole.CUSTOMER, UserRole.SELLER),
+  orderController.updateOrder,
 );
 
 export const orderRouter = router;

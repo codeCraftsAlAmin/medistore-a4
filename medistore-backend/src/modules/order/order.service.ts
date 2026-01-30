@@ -1,3 +1,4 @@
+import { OrderStatus } from "../../../generated/prisma/enums";
 import { prisma } from "../../lib/prisma";
 import { UserType } from "../../types";
 
@@ -72,46 +73,72 @@ const createOrderHandler = async (
 };
 
 const getOrderHandler = async (user: UserType) => {
-  let whereConditions: any = {};
+  let orderInfo: any = {};
 
+  // for customer
   if (user.role === "CUSTOMER") {
-    // customer views own purches history
-    whereConditions: {
-      userId: user.id;
-    }
+    orderInfo = await prisma.order.findMany({
+      where: {
+        userId: user.id,
+      },
+    });
   }
-  // seller view order and contain medicine
-  else if (user.role === "SELLER") {
-    whereConditions: {
+
+  // for seller
+  if (user.role === "SELLER") {
+    orderInfo = await prisma.order.findMany({
+      where: {
+        orderItems: {
+          some: {
+            medicine: {
+              userId: user.id,
+            },
+          },
+        },
+      },
+    });
+  }
+
+  // for admin
+  if (user.role === "ADMIN") {
+    orderInfo = await prisma.order.findMany();
+  }
+
+  return orderInfo;
+};
+
+const updateOrderHandler = async (
+  orderId: string,
+  status: OrderStatus,
+  user: UserType,
+) => {
+  // find the order and the seller
+  const findOrder = await prisma.order.findMany({
+    where: {
+      id: orderId,
       orderItems: {
         some: {
           medicine: {
-            userId: user.id;
-          }
-        }
-      }
-    }
-  }
-
-  //   admin can see all orders
-  const data = await prisma.order.findMany({
-    where: whereConditions,
-    include: {
-      // show who bought it
-      user: {
-        select: { name: true, email: true },
-      },
-      //   show items
-      orderItems: {
-        include: {
-          medicine: {
-            select: { name: true, manufacturer: true, userId: true },
+            userId: user.id,
           },
         },
-        orderBy: {
-          createdAt: "desc", // newest order at the top
-        },
       },
+    },
+  });
+
+  if (!findOrder) {
+    throw new Error(
+      "Order not found or you don't have permission to update it",
+    );
+  }
+
+  // update the order
+  const data = await prisma.order.update({
+    where: {
+      id: orderId,
+    },
+    data: {
+      status: status,
     },
   });
 
@@ -121,4 +148,5 @@ const getOrderHandler = async (user: UserType) => {
 export const orderService = {
   createOrderHandler,
   getOrderHandler,
+  updateOrderHandler,
 };

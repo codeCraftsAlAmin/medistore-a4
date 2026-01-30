@@ -90,6 +90,18 @@ const getMedicinesHandler = async (
     });
   }
 
+  // category by manufacturer
+  if (category) {
+    conditions.push({
+      category: {
+        name: {
+          contains: category,
+          mode: "insensitive",
+        },
+      },
+    });
+  }
+
   const data = await prisma.medicine.findMany({
     where: {
       AND: conditions.length > 0 ? conditions : [],
@@ -127,7 +139,7 @@ const getMedicinesHandler = async (
     paginations: {
       page,
       limit,
-      total,
+      totalMedicine: total,
       totalPage: Math.ceil(total / (limit || 5)),
     },
   };
@@ -191,6 +203,15 @@ const deleteMedicineHandler = async (id: string, user: UserType) => {
     throw new Error(
       "Forbidden!!. You are not authorized to update this resources",
     );
+  }
+
+  // if medicine has order
+  const orderWithMedicine = await prisma.orderItem.count({
+    where: { medicineId: findMedicine.id },
+  });
+
+  if (orderWithMedicine > 0) {
+    throw new Error("Cannot delete medicine with active order history.");
   }
 
   await prisma.medicine.delete({
