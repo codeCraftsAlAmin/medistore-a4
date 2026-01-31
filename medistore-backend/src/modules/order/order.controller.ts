@@ -58,8 +58,28 @@ const updateOrder = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+const cancelOrder = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { id } = req.params;
+
+    const data = await orderService.cancleOrderHandler(
+      id as string,
+      req.user as UserType,
+    );
+
+    res.status(200).json({
+      ok: true,
+      message: "Orders cancelled successfully",
+      data,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const orderController = {
   createOrder,
   getOrder,
   updateOrder,
+  cancelOrder,
 };

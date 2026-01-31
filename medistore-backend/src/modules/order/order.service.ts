@@ -81,6 +81,13 @@ const getOrderHandler = async (user: UserType) => {
       where: {
         userId: user.id,
       },
+      include: {
+        orderItems: {
+          select: {
+            medicineId: true,
+          },
+        },
+      },
     });
   }
 
@@ -112,8 +119,8 @@ const updateOrderHandler = async (
   status: OrderStatus,
   user: UserType,
 ) => {
-  // find the order and the seller
-  const findOrder = await prisma.order.findMany({
+  // seller's order
+  const findOrder = await prisma.order.findFirst({
     where: {
       id: orderId,
       orderItems: {
@@ -132,6 +139,14 @@ const updateOrderHandler = async (
     );
   }
 
+  if (user.role === "SELLER" && status === "CANCELLED") {
+    throw new Error("Seller can not change this status");
+  }
+
+  if (user.role === "SELLER" && findOrder.status === "CANCELLED") {
+    throw new Error("Seller can not update cancelled order this status");
+  }
+
   // update the order
   const data = await prisma.order.update({
     where: {
@@ -145,8 +160,56 @@ const updateOrderHandler = async (
   return data;
 };
 
+const cancleOrderHandler = async (orderId: string, user: UserType) => {
+  // ensure the order begins from exact customer
+  const findOrder = await prisma.order.findFirst({
+    where: {
+      id: orderId,
+      userId: user.id,
+    },
+    include: {
+      orderItems: true,
+    },
+  });
+
+  if (!findOrder) {
+    throw new Error("Order not found");
+  }
+  // can only cancel in PLACED
+  if (findOrder.status !== "PLACED") {
+    throw new Error(
+      "Cannot cancel this order. It has already been processed or shipped",
+    );
+  }
+
+  // restore stock
+  return await prisma.$transaction(async (tx) => {
+    for (const item of findOrder.orderItems) {
+      await tx.medicine.update({
+        where: {
+          id: item.medicineId,
+        },
+        data: {
+          stock: { increment: item.quantity },
+        },
+      });
+    }
+
+    // update status
+    await tx.order.update({
+      where: {
+        id: orderId,
+      },
+      data: {
+        status: "CANCELLED",
+      },
+    });
+  });
+};
+
 export const orderService = {
   createOrderHandler,
   getOrderHandler,
   updateOrderHandler,
+  cancleOrderHandler,
 };

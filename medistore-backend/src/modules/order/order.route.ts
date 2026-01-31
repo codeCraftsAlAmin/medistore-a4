@@ -21,8 +21,15 @@ router.get(
 // update order status -- seller
 router.put(
   "/order/:id",
-  authMiddleware(UserRole.CUSTOMER, UserRole.SELLER),
+  authMiddleware(UserRole.SELLER),
   orderController.updateOrder,
+);
+
+// cancell order -- seller
+router.put(
+  "/cancel/order/:id",
+  authMiddleware(UserRole.CUSTOMER),
+  orderController.cancelOrder,
 );
 
 export const orderRouter = router;

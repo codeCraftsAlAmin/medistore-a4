@@ -40,7 +40,20 @@ const deleteCategoryHandler = async (id: string) => {
     throw new Error("Category not found");
   }
 
-  const data = await prisma.category.delete({
+  // check if medicine exits in this category
+  const checkMedicine = await prisma.medicine.count({
+    where: {
+      categoryId: id,
+    },
+  });
+
+  if (checkMedicine > 0) {
+    throw new Error(
+      `Cannot delete category. There are ${checkMedicine} medicines assigned to it. Please reassign or delete them first.`,
+    );
+  }
+
+  await prisma.category.delete({
     where: {
       id: id,
     },
