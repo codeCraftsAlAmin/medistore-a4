@@ -1,0 +1,37 @@
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
+
+// Define the User type based on your backend roles
+interface User {
+  id: string;
+  name: string;
+  role: "ADMIN" | "SELLER" | "CUSTOMER";
+}
+
+interface AuthState {
+  user: User | null;
+  token: string | null;
+  isAuthenticated: boolean; // Fixed: Explicitly added here
+  setAuth: (user: User, token: string) => void;
+  logout: () => void;
+}
+
+export const useAuth = create<AuthState>()(
+  persist(
+    (set) => ({
+      user: null,
+      token: null,
+      isAuthenticated: false, // Initial state
+      setAuth: (user, token) =>
+        set({
+          user,
+          token,
+          isAuthenticated: true,
+        }),
+      logout: () => {
+        set({ user: null, token: null, isAuthenticated: false });
+      },
+    }),
+    { name: "auth-storage" },
+  ),
+);
