@@ -51,4 +51,48 @@ export const orderService = {
       };
     }
   },
+
+  createOrder: async function (orderData: any) {
+    try {
+      const cookieStore = await cookies();
+      const res = await fetch(`${BACKEND_URL}/api/order/`, {
+        method: "POST", // Matches your router.post("/order/")
+        headers: {
+          "Content-Type": "application/json",
+          Cookie: cookieStore.toString(),
+        },
+        body: JSON.stringify(orderData),
+      });
+
+      const response = await res.json();
+      return res.ok
+        ? { data: response.data, error: null }
+        : { data: null, error: response };
+    } catch (error: any) {
+      return { data: null, error: { message: "Order placement failed" } };
+    }
+  },
+
+  cancelOrder: async function (orderId: string) {
+    try {
+      const cookieStore = await cookies();
+      const res = await fetch(
+        `${BACKEND_URL}/api/order/cancel/order/${orderId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Cookie: cookieStore.toString(),
+          },
+        },
+      );
+
+      const response = await res.json();
+      return res.ok
+        ? { data: response.data, error: null }
+        : { data: null, error: response };
+    } catch (error: any) {
+      return { data: null, error: { message: "Cancellation failed" } };
+    }
+  },
 };

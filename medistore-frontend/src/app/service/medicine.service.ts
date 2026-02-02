@@ -128,8 +128,13 @@ export const medicineService = {
       });
 
       if (!res.ok) {
-        const errorResponse = await res.json().catch(() => ({ message: `HTTP error: ${res.status}` }));
-        return { data: null, error: errorResponse.message || `HTTP error: ${res.status}` };
+        const errorResponse = await res
+          .json()
+          .catch(() => ({ message: `HTTP error: ${res.status}` }));
+        return {
+          data: null,
+          error: errorResponse.message || `HTTP error: ${res.status}`,
+        };
       }
 
       const response = await res.json();
@@ -140,7 +145,59 @@ export const medicineService = {
       };
     } catch (error) {
       console.error("Category Fetch Error:", error);
-      return { data: null, error: error instanceof Error ? error.message : "Something went wrong" };
+      return {
+        data: null,
+        error: error instanceof Error ? error.message : "Something went wrong",
+      };
+    }
+  },
+
+  updateMedicine: async function (medicineId: string, payload: any) {
+    try {
+      const cookieStore = await cookies();
+      const res = await fetch(`${BACKEND_URL}/api/medicine/${medicineId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Cookie: cookieStore.toString(),
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const response = await res.json();
+      return res.ok
+        ? { data: response.data, error: null }
+        : { data: null, error: response };
+    } catch (error: any) {
+      return {
+        data: null,
+        error: { message: "Service Error: " + error.message },
+      };
+    }
+  },
+
+  deleteMedicine: async function (medicineId: string) {
+    try {
+      const cookieStore = await cookies();
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/medicine/${medicineId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Cookie: cookieStore.toString(), // Passes session for authentication(UserRole.SELLER)
+          },
+        },
+      );
+
+      const response = await res.json();
+      return res.ok
+        ? { data: response.data, error: null }
+        : { data: null, error: response };
+    } catch (error: any) {
+      return {
+        data: null,
+        error: { message: error.message || "Deletion failed" },
+      };
     }
   },
 };
