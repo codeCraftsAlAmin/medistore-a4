@@ -76,16 +76,13 @@ export const orderService = {
   cancelOrder: async function (orderId: string) {
     try {
       const cookieStore = await cookies();
-      const res = await fetch(
-        `${BACKEND_URL}/api/order/cancel/order/${orderId}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Cookie: cookieStore.toString(),
-          },
+      const res = await fetch(`${BACKEND_URL}/api/cancel/order/${orderId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Cookie: cookieStore.toString(),
         },
-      );
+      });
 
       const response = await res.json();
       return res.ok

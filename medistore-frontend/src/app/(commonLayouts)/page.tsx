@@ -62,7 +62,7 @@ export default async function Home({
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Button size="lg" asChild shadow-lg="true">
-              <Link href="/medicine">
+              <Link href="/customer/shop">
                 Shop Now <ShoppingBag className="ml-2 h-5 w-5" />
               </Link>
             </Button>

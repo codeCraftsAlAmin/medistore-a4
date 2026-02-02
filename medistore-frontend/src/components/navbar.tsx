@@ -72,9 +72,9 @@ const Navbar = () => {
           icon: <ShoppingBag className="size-5" />,
         },
         {
-          title: "Prescriptions",
-          url: "/customer/prescriptions",
-          description: "Manage your medical uploads.",
+          title: "Shop",
+          url: "/customer/shop",
+          description: "Buy your products.",
           icon: <ClipboardList className="size-5" />,
         },
       ],

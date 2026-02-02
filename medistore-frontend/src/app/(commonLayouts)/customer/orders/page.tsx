@@ -1,8 +1,13 @@
 import { orderService } from "@/app/service/order.service";
 import { userService } from "@/app/service/user.service";
-import { ShoppingBag, AlertCircle } from "lucide-react";
+import { ShoppingBag, AlertCircle, XCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { handleCancelOrder } from "@/app/actions/order.actions";
+
+// Create a client component for the cancel button
+import { CancelOrderButton } from "./CancelOrderButton";
 
 export default async function CustomerOrdersPage() {
   const { data: sessionData } = await userService.getSession();
@@ -10,7 +15,6 @@ export default async function CustomerOrdersPage() {
 
   const { data: allOrders, error } = await orderService.getOrders();
 
-  // Filter: Show only orders belonging to this customer
   const myOrders =
     currentUser && allOrders
       ? allOrders.filter((order: any) => order.userId === currentUser.id)
@@ -67,42 +71,48 @@ export default async function CustomerOrdersPage() {
                   key={order.id}
                   className="border-b hover:bg-muted/50 transition-colors"
                 >
-                  {/* Shortened ID for better UI fit */}
                   <td className="p-4 font-mono text-xs uppercase text-muted-foreground">
                     {order.id.split("-")[0]}...
                   </td>
 
-                  {/* Extract names from orderItems */}
                   <td className="p-4 font-medium">
                     {order.orderItems
-                      ?.map((item: any) => item.medicine.name)
-                      .join(", ")}
+                      ?.map((item: any) => item.medicine?.name)
+                      .join(", ") || "N/A"}
                   </td>
 
-                  {/* Calculate total quantity from orderItems */}
                   <td className="p-4">
                     {order.orderItems?.reduce(
-                      (acc: number, item: any) => acc + item.quantity,
+                      (acc: number, item: any) => acc + (item.quantity || 0),
                       0,
                     )}
                   </td>
 
-                  <td className="p-4">${order.totalPrice.toFixed(2)}</td>
+                  <td className="p-4 font-semibold">
+                    ${order.totalPrice.toFixed(2)}
+                  </td>
+
                   <td className="p-4">
-                    <Badge
-                      variant={
-                        order.status === "SHIPPED" ? "outline" : "secondary"
-                      }
-                      className={
-                        order.status === "SHIPPED"
-                          ? "border-green-500 text-green-500"
-                          : order.status === "CANCELLED"
-                            ? "border-red-500 text-red-500"
-                            : ""
-                      }
-                    >
-                      {order.status}
-                    </Badge>
+                    <div className="flex items-center gap-3">
+                      <Badge
+                        variant={
+                          order.status === "SHIPPED" ? "outline" : "secondary"
+                        }
+                        className={
+                          order.status === "SHIPPED"
+                            ? "border-green-500 text-green-500"
+                            : order.status === "CANCELLED"
+                              ? "border-red-500 text-red-500"
+                              : ""
+                        }
+                      >
+                        {order.status}
+                      </Badge>
+
+                      {order.status === "PLACED" && (
+                        <CancelOrderButton orderId={order.id} />
+                      )}
+                    </div>
                   </td>
                 </tr>
               ))

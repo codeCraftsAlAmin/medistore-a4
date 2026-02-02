@@ -2,41 +2,64 @@
 
 import { revalidatePath } from "next/cache";
 import { orderService } from "../service/order.service";
+import { redirect } from "next/navigation";
 
-// ✅ NEW: Action for CUSTOMERS to place an order
+/**
+ * Create a new order
+ * Backend expects: { address: string, items: [{medicineId: string, quantity: number}] }
+ */
 export async function createOrderAction(orderData: {
   medicineId: string;
   quantity: number;
   address: string;
 }) {
-  const res = await orderService.createOrder(orderData);
+  // Transform single item into the array format backend expects
+  const backendFormat = {
+    address: orderData.address,
+    items: [
+      {
+        medicineId: orderData.medicineId,
+        quantity: orderData.quantity,
+      },
+    ],
+  };
+
+  const res = await orderService.createOrder(backendFormat);
 
   if (!res.error) {
-    // Refresh the customer's order list and the public medicine stock
+    // Refresh the customer's order list and the shop page
     revalidatePath("/customer/orders");
-    revalidatePath("/medicine");
+    revalidatePath("/customer/shop");
   }
 
   return res;
 }
 
-// ✅ EXISTING: Action for SELLERS to update status (Keep this!)
+/**
+ * Update order status (for sellers)
+ */
 export async function updateOrderStatusAction(orderId: string, status: string) {
   const res = await orderService.updateOrderStatus(orderId, status);
 
   if (!res.error) {
     revalidatePath("/seller/orders");
-    revalidatePath("/customer/orders"); // Also refresh for the customer
+    revalidatePath("/customer/orders");
   }
 
   return res;
 }
 
-export async function cancelOrderAction(orderId: string) {
+/**
+ * Cancel an order (for customers)
+ */
+export async function handleCancelOrder(orderId: string) {
   const res = await orderService.cancelOrder(orderId);
+
+  revalidatePath("/customer/orders");
+
   if (!res.error) {
-    revalidatePath("/customer/orders");
-    revalidatePath("/seller/orders");
+    redirect("/customer/orders");
   }
-  return res;
+
+  return { success: false, error: res.error };
 }
