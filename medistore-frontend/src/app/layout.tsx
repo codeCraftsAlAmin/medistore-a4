@@ -36,20 +36,20 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-            {children}
-    <Toaster 
-  position="top-center" 
-  theme="dark" 
-  richColors 
-  duration={3000}
-  toastOptions={{
-    style: {
-      background: '#000000',
-      color: '#ffffff',
-      border: '1px solid #262626',
-    },
-  }}
-/>
+          {children}
+          <Toaster
+            position="top-center"
+            theme="dark"
+            richColors
+            duration={3000}
+            toastOptions={{
+              style: {
+                background: "#000000",
+                color: "#ffffff",
+                border: "1px solid #262626",
+              },
+            }}
+          />
         </ThemeProvider>
       </body>
     </html>

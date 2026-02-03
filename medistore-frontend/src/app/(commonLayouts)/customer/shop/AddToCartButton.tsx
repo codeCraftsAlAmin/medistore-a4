@@ -16,6 +16,7 @@ import {
 import { Label } from "@/components/ui/label";
 import { createOrderAction } from "@/app/actions/order.actions";
 import { Textarea } from "@/components/ui/textarea";
+import { toast } from "sonner";
 
 interface Medicine {
   id: string;
@@ -62,8 +63,10 @@ export function AddToCartButton({ medicine }: { medicine: Medicine }) {
 
       if (result.error) {
         setError(result.error.message || "Failed to place order");
+        toast.error(result.error.message || "Failed to place order");
       } else {
         // Success! Close dialog and redirect
+        toast.success("Order placed successfully!");
         setIsDialogOpen(false);
         router.push("/customer/orders");
         router.refresh();
