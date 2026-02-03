@@ -14,7 +14,6 @@ router.post(
 // get medicines -- everyone
 router.get(
   "/medicine",
-  // authentication(UserRole.ADMIN, UserRole.CUSTOMER, UserRole.SELLER),
   medicineController.getMedicines,
 );
 

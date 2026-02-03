@@ -1,5 +1,24 @@
 import { prisma } from "../../lib/prisma";
 
+const createCategoryHandler = async (name: string) => {
+  const findCategory = await prisma.category.findFirst({
+    where: {
+      name: name,
+    },
+  });
+
+  if (findCategory) {
+    throw new Error("Category already exists");
+  }
+
+  const data = await prisma.category.create({
+    data: {
+      name: name,
+    },
+  });
+  return data;
+};
+
 const geCategoriesHandler = async (search: string) => {
   const data = await prisma.category.findMany({
     where: search
@@ -64,4 +83,5 @@ export const categoryService = {
   geCategoriesHandler,
   updateCategoryHandler,
   deleteCategoryHandler,
+  createCategoryHandler,
 };

@@ -39,6 +39,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { ModeToggle } from "./model-toggle";
+import { ProfileDropdown } from "./ProfileDropdown";
 
 interface MenuItem {
   title: string;
@@ -181,67 +182,110 @@ const Navbar = () => {
               </>
             ) : (
               <div className="flex items-center gap-4">
-                <span className="text-sm font-medium text-muted-foreground">
-                  {user?.name} ({user?.role})
-                </span>
-                <Button
-                  onClick={logout}
-                  variant="destructive"
-                  size="sm"
-                  className="gap-2"
-                >
-                  <LogOut className="size-4" /> Logout
-                </Button>
+                <ProfileDropdown />
               </div>
             )}
           </div>
         </nav>
 
-        {/* Mobile Menu */}
+        {/* Mobile & Tablet Menu */}
         <div className="flex items-center justify-between lg:hidden">
-          <Link href="/" className="flex items-center gap-2">
-            <Pill className="size-6 text-primary" />
-            <span className="text-lg font-bold">mediStore</span>
+          <Link href="/" className="flex items-center gap-2 group">
+            <div className="p-1.5 rounded-lg bg-primary/10 border border-primary/20 group-hover:bg-primary/20 transition-all">
+              <Pill className="size-6 text-primary" />
+            </div>
+            <span className="text-xl font-bold tracking-tighter text-white">
+              mediStore
+            </span>
           </Link>
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button variant="outline" size="icon">
-                <Menu className="size-4" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent>
-              <SheetHeader>
-                <SheetTitle className="flex items-center gap-2">
-                  <Pill className="size-5 text-primary" /> mediStore
-                </SheetTitle>
-              </SheetHeader>
-              <div className="flex flex-col gap-6 py-6">
-                <Accordion type="single" collapsible className="w-full">
-                  {menu.map((item) => renderMobileMenuItem(item))}
-                </Accordion>
-                <div className="flex flex-col gap-3">
-                  {!isAuthenticated ? (
-                    <>
-                      <Button asChild variant="outline">
-                        <Link href="/login">Login</Link>
+
+          <div className="flex items-center gap-3">
+            <ModeToggle />
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="rounded-xl border border-white/5 hover:bg-white/5"
+                >
+                  <Menu className="size-6 text-white" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent
+                side="right"
+                className="w-[300px] sm:w-[400px] bg-zinc-950 border-white/5 p-0"
+              >
+                <div className="flex flex-col h-full">
+                  <SheetHeader className="p-6 border-b border-white/5">
+                    <SheetTitle className="flex items-center gap-2 text-white">
+                      <div className="p-1.5 rounded-lg bg-primary/10 border border-primary/20">
+                        <Pill className="size-5 text-primary" />
+                      </div>
+                      <span className="font-bold tracking-tight text-xl">
+                        mediStore
+                      </span>
+                    </SheetTitle>
+                  </SheetHeader>
+
+                  <div className="flex-1 overflow-y-auto p-6 space-y-8">
+                    {/* User Profile Section in Mobile Menu */}
+                    {isAuthenticated && user && (
+                      <div className="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-4">
+                        <div className="flex items-center gap-3">
+                          <div className="h-12 w-12 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center text-primary">
+                            <Users className="size-6" />
+                          </div>
+                          <div>
+                            <p className="font-bold text-white text-base leading-tight">
+                              {user.name}
+                            </p>
+                            <p className="text-[10px] font-mono uppercase tracking-widest text-primary/70 mt-1">
+                              {user.role}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="space-y-4">
+                      <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground/50 px-2 lg:px-4">
+                        Navigation
+                      </p>
+                      <Accordion type="single" collapsible className="w-full">
+                        {menu.map((item) => renderMobileMenuItem(item))}
+                      </Accordion>
+                    </div>
+                  </div>
+
+                  <div className="p-6 border-t border-white/5 bg-zinc-900/50">
+                    {!isAuthenticated ? (
+                      <div className="grid grid-cols-2 gap-3">
+                        <Button
+                          asChild
+                          variant="outline"
+                          className="rounded-xl border-white/10 hover:bg-white/5"
+                        >
+                          <Link href="/login">Login</Link>
+                        </Button>
+                        <Button asChild className="rounded-xl shadow-glow">
+                          <Link href="/register">Sign up</Link>
+                        </Button>
+                      </div>
+                    ) : (
+                      <Button
+                        onClick={logout}
+                        variant="ghost"
+                        className="w-full justify-start gap-3 h-12 rounded-xl text-rose-500 hover:text-rose-400 hover:bg-rose-500/10 font-bold transition-all"
+                      >
+                        <LogOut className="size-5" />
+                        Logout Session
                       </Button>
-                      <Button asChild>
-                        <Link href="/register">Sign up</Link>
-                      </Button>
-                    </>
-                  ) : (
-                    <Button
-                      onClick={logout}
-                      variant="destructive"
-                      className="w-full"
-                    >
-                      Logout
-                    </Button>
-                  )}
+                    )}
+                  </div>
                 </div>
-              </div>
-            </SheetContent>
-          </Sheet>
+              </SheetContent>
+            </Sheet>
+          </div>
         </div>
       </div>
     </section>
@@ -300,18 +344,28 @@ const renderMobileMenuItem = (item: MenuItem) => {
         value={item.title}
         className="border-none"
       >
-        <AccordionTrigger className="text-base font-semibold py-2">
-          {item.title}
+        <AccordionTrigger className="text-base font-bold py-4 px-2 hover:no-underline hover:text-primary transition-colors">
+          <div className="flex items-center gap-3">{item.title}</div>
         </AccordionTrigger>
         <AccordionContent>
-          <div className="flex flex-col gap-2 pl-4">
+          <div className="flex flex-col gap-1 pl-4 pb-2">
             {item.items.map((subItem) => (
               <Link
                 key={subItem.title}
                 href={subItem.url}
-                className="text-sm py-2 text-muted-foreground hover:text-primary"
+                className="flex items-center gap-3 text-sm py-3 px-3 rounded-lg text-muted-foreground hover:text-white hover:bg-white/5 transition-all"
               >
-                {subItem.title}
+                <div className="p-1.5 rounded-md bg-white/5 text-muted-foreground group-hover:text-primary">
+                  {subItem.icon}
+                </div>
+                <div>
+                  <div className="font-bold text-sm tracking-tight">
+                    {subItem.title}
+                  </div>
+                  <p className="text-[10px] text-muted-foreground/60 line-clamp-1 mt-0.5">
+                    {subItem.description}
+                  </p>
+                </div>
               </Link>
             ))}
           </div>
@@ -323,7 +377,7 @@ const renderMobileMenuItem = (item: MenuItem) => {
     <Link
       key={item.title}
       href={item.url}
-      className="block text-base font-semibold py-2"
+      className="flex items-center gap-3 text-base font-bold py-4 px-2 hover:text-primary transition-colors"
     >
       {item.title}
     </Link>

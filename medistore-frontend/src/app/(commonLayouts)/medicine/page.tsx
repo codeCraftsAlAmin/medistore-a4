@@ -68,7 +68,7 @@ export default async function MedicinePage({
         )}
       </div>
 
-      <MedicineFilters categories={catRes.data || []} />
+      <MedicineFilters />
 
       <MedicineList
         data={medRes.data?.data || []}

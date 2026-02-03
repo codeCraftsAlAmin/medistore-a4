@@ -17,8 +17,8 @@ const createReviewHandler = async (
     throw new Error("Medicine not found");
   }
 
-  if(rating < 1 || rating > 5){
-    throw new Error("Rating must be between 1 and 5 stars")
+  if (rating < 1 || rating > 5) {
+    throw new Error("Rating must be between 1 and 5 stars");
   }
 
   const data = await prisma.review.create({
@@ -34,7 +34,22 @@ const createReviewHandler = async (
 };
 
 const getReviewsHandler = async () => {
-  const data = await prisma.review.findMany();
+  const data = await prisma.review.findMany({
+    include: {
+      medicine: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+      user: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+    },
+  });
 
   return data;
 };

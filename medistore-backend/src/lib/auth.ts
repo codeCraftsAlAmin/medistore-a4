@@ -32,8 +32,9 @@ export const auth = betterAuth({
   },
   emailVerification: {
     autoSignInAfterVerification: true,
-    sendOnSignIn: true, // send email wihile signing up
-    verifyEmailRedirectPath: "/login?verified=true",
+    sendOnSignUp: true, // send email wihile signing up
+    // verifyEmailRedirectPath: "/login?verified=true",
+    
     sendVerificationEmail: async ({ user, url }) => {
       sendEmail({ user, url });
     },

@@ -20,6 +20,25 @@ const getCategories = async (
   }
 };
 
+const createCategory = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { name } = req.body;
+    const data = await categoryService.createCategoryHandler(name as string);
+
+    res.status(201).json({
+      ok: true,
+      message: "Category created successfully",
+      data,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const updateCategory = async (
   req: Request,
   res: Response,
@@ -65,4 +84,5 @@ export const categoryController = {
   getCategories,
   updateCategory,
   deleteCategory,
+  createCategory,
 };

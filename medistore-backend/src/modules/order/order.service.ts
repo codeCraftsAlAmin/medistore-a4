@@ -125,7 +125,16 @@ const getOrderHandler = async (user: UserType) => {
 
   // for admin
   if (user.role === "ADMIN") {
-    orderInfo = await prisma.order.findMany();
+    orderInfo = await prisma.order.findMany({
+      include: {
+        user: {
+          select: {
+            name: true,
+            email: true,
+          },
+        },
+      },
+    });
   }
 
   return orderInfo;

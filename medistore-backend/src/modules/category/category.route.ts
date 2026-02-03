@@ -11,6 +11,13 @@ router.get(
   categoryController.getCategories,
 );
 
+// create category -- admin
+router.post(
+  "/category/",
+  authMiddleware(UserRole.ADMIN),
+  categoryController.createCategory,
+);
+
 // get categories -- admin
 router.put(
   "/category/:id",

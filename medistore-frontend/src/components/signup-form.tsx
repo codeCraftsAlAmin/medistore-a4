@@ -31,6 +31,7 @@ const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Please enter a valid email address"),
   password: z.string().min(8, "Password must be at least 8 characters"),
+  role: z.enum(["CUSTOMER", "SELLER"]),
 });
 
 export function RegisterForm({
@@ -60,6 +61,7 @@ export function RegisterForm({
       name: "",
       email: "",
       password: "",
+      role: "CUSTOMER" as "CUSTOMER" | "SELLER",
     },
     validators: {
       onSubmit: formSchema,
@@ -73,7 +75,9 @@ export function RegisterForm({
           name: value.name,
           email: value.email,
           password: value.password,
-        });
+          role: value.role,
+          callbackURL: NEXT_PUBLIC_FRONTEND_URL,
+        } as any);
 
         if (error) {
           toast.error(error.message || "Registration failed", { id: toastId });
@@ -82,7 +86,7 @@ export function RegisterForm({
 
         toast.success(
           "Account created successfully! Please check your email to verify your account.",
-          { id: toastId }
+          { id: toastId },
         );
 
         // Redirect to login or verification page
@@ -194,8 +198,64 @@ export function RegisterForm({
                 }}
               />
 
+              {/* Role Selection */}
+              <form.Field
+                name="role"
+                children={(field) => {
+                  return (
+                    <Field>
+                      <FieldLabel className="mb-2 block text-xs font-bold text-white/50 uppercase tracking-widest">
+                        Register as
+                      </FieldLabel>
+                      <div className="flex gap-3 p-1 bg-white/5 rounded-xl border border-white/5">
+                        <label
+                          className={cn(
+                            "flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg cursor-pointer transition-all duration-200",
+                            field.state.value === "CUSTOMER"
+                              ? "bg-primary text-primary-foreground shadow-sm"
+                              : "text-muted-foreground hover:bg-white/5",
+                          )}
+                        >
+                          <input
+                            type="radio"
+                            className="sr-only"
+                            name={field.name}
+                            value="CUSTOMER"
+                            checked={field.state.value === "CUSTOMER"}
+                            onChange={() => field.handleChange("CUSTOMER")}
+                          />
+                          <span className="font-bold text-xs uppercase tracking-tight">
+                            Customer
+                          </span>
+                        </label>
+                        <label
+                          className={cn(
+                            "flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg cursor-pointer transition-all duration-200",
+                            field.state.value === "SELLER"
+                              ? "bg-primary text-primary-foreground shadow-sm"
+                              : "text-muted-foreground hover:bg-white/5",
+                          )}
+                        >
+                          <input
+                            type="radio"
+                            className="sr-only"
+                            name={field.name}
+                            value="SELLER"
+                            checked={field.state.value === "SELLER"}
+                            onChange={() => field.handleChange("SELLER")}
+                          />
+                          <span className="font-bold text-xs uppercase tracking-tight">
+                            Seller
+                          </span>
+                        </label>
+                      </div>
+                    </Field>
+                  );
+                }}
+              />
+
               {/* Submit Buttons */}
-              <Field>
+              <Field className="pt-2">
                 <Button
                   form="register-form"
                   type="submit"

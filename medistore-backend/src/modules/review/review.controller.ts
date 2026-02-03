@@ -18,7 +18,7 @@ const createReview = async (
 
     res.status(201).json({
       ok: true,
-      message: "Data created successfully",
+      message: "Review created successfully",
       data,
     });
   } catch (error) {
@@ -32,7 +32,7 @@ const getReviews = async (req: Request, res: Response, next: NextFunction) => {
 
     res.status(201).json({
       ok: true,
-      message: "Data retrived successfully",
+      message: "Reviews retrived successfully",
       data,
     });
   } catch (error) {

@@ -29,7 +29,7 @@ const authMiddleware = (...role: UserRole[]) => {
 
     // if session not found
     if (!session) {
-      res.status(404).json({
+      return res.status(404).json({
         ok: false,
         message: "You are not authorized!!",
       });
@@ -37,7 +37,7 @@ const authMiddleware = (...role: UserRole[]) => {
 
     // email is not verified
     if (!session?.user.emailVerified) {
-      res.status(403).json({
+      return res.status(403).json({
         ok: false,
         message: "Email verification is required, please verify your email",
       });
@@ -53,7 +53,7 @@ const authMiddleware = (...role: UserRole[]) => {
 
     // if roel is incorect
     if (role.length && !role.includes(req.user?.role as UserRole)) {
-      res.status(403).json({
+      return res.status(403).json({
         ok: false,
         message:
           "Forbidden!! You don't have the permission to access this resources",

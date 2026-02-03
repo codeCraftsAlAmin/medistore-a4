@@ -6,4 +6,18 @@ export const authClient = createAuthClient({
   fetchOptions: {
     credentials: "include",
   },
+  user: {
+    additionalFields: {
+      role: {
+        type: "string",
+        required: false,
+        defaultValue: "CUSTOMER",
+      },
+      status: {
+        type: "string",
+        required: false,
+        defaultValue: "UNBAN",
+      },
+    },
+  },
 });

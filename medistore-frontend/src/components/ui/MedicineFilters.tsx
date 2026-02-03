@@ -23,16 +23,11 @@ import {
 } from "@/components/ui/select";
 import { useCallback, useState, useEffect } from "react";
 
-interface Category {
-  id: string;
-  name: string;
-}
-
 interface MedicineFiltersProps {
-  categories: Category[];
+  // categories: Category[];
 }
 
-export function MedicineFilters({ categories }: MedicineFiltersProps) {
+export function MedicineFilters({}: MedicineFiltersProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -121,33 +116,7 @@ export function MedicineFilters({ categories }: MedicineFiltersProps) {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {/* Category Filter */}
-        <div className="space-y-2">
-          <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider flex items-center gap-1.5 px-1">
-            <Tag className="h-3 w-3" />
-            Category
-          </label>
-          <Select
-            value={searchParams.get("category") || "all"}
-            onValueChange={(val) =>
-              handleFilterChange("category", val === "all" ? null : val)
-            }
-          >
-            <SelectTrigger className="h-11 bg-zinc-950/50 border-white/10">
-              <SelectValue placeholder="All Categories" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Categories</SelectItem>
-              {categories.map((cat) => (
-                <SelectItem key={cat.id} value={cat.name}>
-                  {cat.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {/* Manufacturer Filter */}
         <div className="space-y-2">
           <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider flex items-center gap-1.5 px-1">
