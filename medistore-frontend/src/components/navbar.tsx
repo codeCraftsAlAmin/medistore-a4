@@ -126,6 +126,24 @@ const Navbar = () => {
           description: "Manage medicine classifications.",
           icon: <ClipboardList className="size-5" />,
         },
+        {
+          title: "Review Logs",
+          url: "/admin/reviews",
+          description: "Monitor platform feedback and ratings.",
+          icon: <Star className="size-5" />,
+        },
+        {
+          title: "Global Orders",
+          url: "/admin/orders",
+          description: "View all platform transactions.",
+          icon: <ShoppingBag className="size-5" />,
+        },
+        {
+          title: "Global Inventory",
+          url: "/admin/inventory",
+          description: "Centralized medicine oversight.",
+          icon: <LayoutDashboard className="size-5" />,
+        },
       ],
     });
   }

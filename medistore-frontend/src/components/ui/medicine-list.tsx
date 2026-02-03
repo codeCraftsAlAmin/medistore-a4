@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Table,
   TableBody,
@@ -10,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Package } from "lucide-react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 interface Medicine {
   id: string;
@@ -17,6 +20,7 @@ interface Medicine {
   price: number;
   stock: number;
   manufacturer: string;
+  category?: { name: string };
 }
 
 interface Pagination {
@@ -35,51 +39,90 @@ interface MedicineListProps {
 export function MedicineList({
   data = [],
   paginations,
-  baseUrl = "/",
+  baseUrl = "/medicine",
 }: MedicineListProps) {
   const { page, totalPage, totalMedicine } = paginations;
+  const searchParams = useSearchParams();
+
+  const createPageURL = (pageNumber: number | string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("page", pageNumber.toString());
+    return `${baseUrl}?${params.toString()}`;
+  };
 
   return (
     <div className="space-y-4">
-      <div className="rounded-md border bg-white dark:bg-zinc-950">
+      <div className="rounded-xl border border-white/5 bg-card/30 backdrop-blur-md overflow-hidden">
         <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="font-sans">Medicine Name</TableHead>
-              <TableHead className="font-sans">Manufacturer</TableHead>
-              <TableHead className="font-sans">Stock</TableHead>
-              <TableHead className="text-right font-sans">Price</TableHead>
+          <TableHeader className="bg-white/5">
+            <TableRow className="hover:bg-transparent border-white/5">
+              <TableHead className="font-sans text-white/70">
+                Medicine Name
+              </TableHead>
+              <TableHead className="font-sans text-white/70">
+                Manufacturer
+              </TableHead>
+              <TableHead className="font-sans text-white/70">
+                Category
+              </TableHead>
+              <TableHead className="font-sans text-white/70">Stock</TableHead>
+              <TableHead className="text-right font-sans text-white/70">
+                Price
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {data.length > 0 ? (
               data.map((item) => (
-                <TableRow key={item.id}>
-                  <TableCell className="font-medium font-sans">
+                <TableRow
+                  key={item.id}
+                  className="hover:bg-white/5 border-white/5 transition-colors"
+                >
+                  <TableCell className="font-medium font-sans text-white">
                     <div className="flex items-center gap-2">
-                      <Package className="h-4 w-4 text-muted-foreground" />
+                      <div className="p-1.5 rounded-lg bg-primary/10">
+                        <Package className="h-4 w-4 text-primary" />
+                      </div>
                       {item.name}
                     </div>
                   </TableCell>
-                  <TableCell className="font-sans">
+                  <TableCell className="font-sans text-slate-400">
                     {item.manufacturer}
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="font-sans text-slate-400">
                     <Badge
-                      variant={item.stock < 50 ? "destructive" : "secondary"}
+                      variant="outline"
+                      className="border-primary/20 bg-primary/5 text-primary"
                     >
-                      {item.stock} in stock
+                      {item.category?.name || "Uncategorized"}
                     </Badge>
                   </TableCell>
-                  <TableCell className="text-right font-semibold font-sans">
+                  <TableCell>
+                    <div className="flex flex-col gap-1">
+                      <Badge
+                        variant={item.stock < 10 ? "destructive" : "secondary"}
+                        className={
+                          item.stock >= 10
+                            ? "bg-emerald-500/10 text-emerald-500 border-emerald-500/20"
+                            : ""
+                        }
+                      >
+                        {item.stock} in stock
+                      </Badge>
+                    </div>
+                  </TableCell>
+                  <TableCell className="text-right font-bold font-sans text-primary">
                     ${item.price.toFixed(2)}
                   </TableCell>
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={4} className="h-24 text-center font-sans">
-                  No medicines found.
+                <TableCell
+                  colSpan={5}
+                  className="h-24 text-center font-sans text-muted-foreground"
+                >
+                  No medicines found matching your criteria.
                 </TableCell>
               </TableRow>
             )}
@@ -88,10 +131,11 @@ export function MedicineList({
       </div>
 
       {/* --- Pagination Footer --- */}
-      <div className="flex items-center justify-between px-2 pt-2">
+      <div className="flex items-center justify-between px-2 pt-2 pb-6">
         <p className="text-sm text-muted-foreground font-sans">
-          Showing <span className="font-medium">{data.length}</span> of{" "}
-          <span className="font-medium">{totalMedicine}</span> medicines
+          Showing <span className="font-medium text-white">{data.length}</span>{" "}
+          of <span className="font-medium text-white">{totalMedicine}</span>{" "}
+          medicines
         </p>
 
         <div className="flex items-center gap-2">
@@ -101,9 +145,10 @@ export function MedicineList({
             size="sm"
             disabled={page <= 1}
             asChild={page > 1}
+            className="border-white/10 hover:bg-white/5"
           >
             {page > 1 ? (
-              <Link href={`${baseUrl}?page=${page - 1}`}>
+              <Link href={createPageURL(page - 1)}>
                 <ChevronLeft className="h-4 w-4 mr-1" /> Previous
               </Link>
             ) : (
@@ -113,8 +158,9 @@ export function MedicineList({
             )}
           </Button>
 
-          <div className="text-sm font-medium font-sans min-w-20 text-center">
-            Page {page} of {totalPage || 1}
+          <div className="text-sm font-medium font-sans min-w-20 text-center text-slate-400">
+            Page <span className="text-white">{page}</span> of{" "}
+            <span className="text-white">{totalPage || 1}</span>
           </div>
 
           {/* Next Button */}
@@ -123,9 +169,10 @@ export function MedicineList({
             size="sm"
             disabled={page >= totalPage || totalPage === 0}
             asChild={page < totalPage}
+            className="border-white/10 hover:bg-white/5"
           >
             {page < totalPage ? (
-              <Link href={`${baseUrl}?page=${page + 1}`}>
+              <Link href={createPageURL(page + 1)}>
                 Next <ChevronRight className="h-4 w-4 ml-1" />
               </Link>
             ) : (

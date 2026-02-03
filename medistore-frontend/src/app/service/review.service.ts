@@ -17,16 +17,22 @@ export const reviewService = {
       },
       body: JSON.stringify(payload),
     });
-    return res.json();
+    const response = await res.json();
+    return res.ok
+      ? { success: true, data: response.data }
+      : { success: false, message: response.message };
   },
-  
+
   getMyReviews: async () => {
     const cookieStore = await cookies();
     const res = await fetch(`${BACKEND_URL}/api/review`, {
       headers: { Cookie: cookieStore.toString() },
       next: { tags: ["reviews"] },
     });
-    return res.json();
+    const response = await res.json();
+    return res.ok
+      ? { success: true, data: response.data }
+      : { success: false, message: response.message };
   },
 
   deleteReview: async (reviewId: string) => {
@@ -35,6 +41,9 @@ export const reviewService = {
       method: "DELETE",
       headers: { Cookie: cookieStore.toString() },
     });
-    return res.json();
+    const response = await res.json();
+    return res.ok
+      ? { success: true, data: response.data }
+      : { success: false, message: response.message };
   },
 };

@@ -200,4 +200,65 @@ export const medicineService = {
       };
     }
   },
+
+  createCategory: async function (name: string) {
+    try {
+      const cookieStore = await cookies();
+      const res = await fetch(`${BACKEND_URL}/api/category/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Cookie: cookieStore.toString(),
+        },
+        body: JSON.stringify({ name }),
+      });
+
+      const response = await res.json();
+      return res.ok
+        ? { success: true, data: response.data }
+        : { success: false, message: response.message };
+    } catch (error) {
+      return { success: false, message: "Failed to create category" };
+    }
+  },
+
+  updateCategory: async function (id: string, name: string) {
+    try {
+      const cookieStore = await cookies();
+      const res = await fetch(`${BACKEND_URL}/api/category/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Cookie: cookieStore.toString(),
+        },
+        body: JSON.stringify({ name }),
+      });
+
+      const response = await res.json();
+      return res.ok
+        ? { success: true, data: response.data }
+        : { success: false, message: response.message };
+    } catch (error) {
+      return { success: false, message: "Failed to update category" };
+    }
+  },
+
+  deleteCategory: async function (id: string) {
+    try {
+      const cookieStore = await cookies();
+      const res = await fetch(`${BACKEND_URL}/api/category/${id}`, {
+        method: "DELETE",
+        headers: {
+          Cookie: cookieStore.toString(),
+        },
+      });
+
+      const response = await res.json();
+      return res.ok
+        ? { success: true, data: response.data }
+        : { success: false, message: response.message };
+    } catch (error) {
+      return { success: false, message: "Failed to delete category" };
+    }
+  },
 };

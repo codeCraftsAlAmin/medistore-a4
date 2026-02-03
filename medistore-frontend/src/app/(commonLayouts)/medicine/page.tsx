@@ -1,20 +1,47 @@
 import { medicineService } from "@/app/service/medicine.service";
 import { AddMedicineModal } from "@/components/layouts/modules/medicine/add-medicine-modal";
 import { MedicineList } from "@/components/ui/medicine-list";
+import { userService } from "@/app/service/user.service";
+import { MedicineFilters } from "@/components/ui/MedicineFilters";
 
 export default async function MedicinePage({
   searchParams,
 }: {
-  searchParams: Promise<{ page?: string }>;
+  searchParams: Promise<{
+    page?: string;
+    search?: string;
+    category?: string;
+    manufacturer?: string;
+    stock?: string;
+    sortBy?: string;
+    sortOrder?: string;
+    price?: string;
+  }>;
 }) {
   const params = await searchParams;
   const currentPage = params.page ? parseInt(params.page) : 1;
 
+  // Extract filters
+  const filters = {
+    page: currentPage,
+    limit: 10,
+    search: params.search,
+    category: params.category,
+    manufacturer: params.manufacturer,
+    stock: params.stock,
+    sortBy: params.sortBy,
+    sortOrder: params.sortOrder,
+    price: params.price,
+  };
+
   // Fetch everything in parallel - ONLY ONCE
-  const [medRes, catRes] = await Promise.all([
-    medicineService.getAllMedicines({ page: currentPage, limit: 10 }),
+  const [medRes, catRes, sessionRes] = await Promise.all([
+    medicineService.getAllMedicines(filters),
     medicineService.getCategories(),
+    userService.getSession(),
   ]);
+
+  const userRole = sessionRes?.data?.role;
 
   // Handle medicine fetch errors
   if (medRes.error) {
@@ -36,8 +63,12 @@ export default async function MedicinePage({
         </div>
 
         {/* Pass the corrected data */}
-        <AddMedicineModal categories={catRes.data || []} />
+        {userRole === "seller" && (
+          <AddMedicineModal categories={catRes.data || []} />
+        )}
       </div>
+
+      <MedicineFilters categories={catRes.data || []} />
 
       <MedicineList
         data={medRes.data?.data || []}

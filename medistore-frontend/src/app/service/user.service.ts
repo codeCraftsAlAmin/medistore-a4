@@ -32,4 +32,59 @@ export const userService = {
       return { data: null, error: { message: "Something went wrong" } };
     }
   },
+
+  getAllUsers: async function () {
+    try {
+      const cookieStore = await cookies();
+      const res = await fetch(`${NEXT_PUBLIC_BACKEND_URL}/api/users/`, {
+        headers: {
+          Cookie: cookieStore.toString(),
+        },
+        cache: "no-store",
+      });
+
+      const response = await res.json();
+
+      if (!res.ok) {
+        return {
+          data: null,
+          error: { message: response.message || "Failed to fetch users" },
+        };
+      }
+
+      return { data: response.data, error: null };
+    } catch (error) {
+      return { data: null, error: { message: "Something went wrong" } };
+    }
+  },
+
+  updateUserStatus: async function (userId: string, status: "BAN" | "UNBAN") {
+    try {
+      const cookieStore = await cookies();
+      const res = await fetch(
+        `${NEXT_PUBLIC_BACKEND_URL}/api/users/${userId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Cookie: cookieStore.toString(),
+          },
+          body: JSON.stringify({ status }),
+        },
+      );
+
+      const response = await res.json();
+
+      if (!res.ok) {
+        return {
+          success: false,
+          message: response.message || "Failed to update user status",
+        };
+      }
+
+      return { success: true, message: response.message };
+    } catch (error) {
+      return { success: false, message: "Something went wrong" };
+    }
+  },
 };
