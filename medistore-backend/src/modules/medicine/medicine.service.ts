@@ -46,6 +46,7 @@ const getMedicinesHandler = async (
     category?: string;
   },
   options: IOptionsResult,
+  user?: UserType,
 ) => {
   const { search, price, stock, manufacturer, category } = filtersParams;
   const { page, limit, skipPage, sortBy, sortOrder } = options;
@@ -120,6 +121,11 @@ const getMedicinesHandler = async (
         : { createdAt: "desc" },
 
     include: {
+      orderItems: {
+        select: {
+          quantity: true,
+        },
+      },
       category: { select: { name: true } },
       _count: {
         select: { reviews: true },

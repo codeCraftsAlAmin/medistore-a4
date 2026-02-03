@@ -1,14 +1,12 @@
 import { orderService } from "@/app/service/order.service";
 import { userService } from "@/app/service/user.service";
-import { ShoppingBag, AlertCircle, XCircle } from "lucide-react";
+import { ShoppingBag, AlertCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { handleCancelOrder } from "@/app/actions/order.actions";
-
-// Create a client component for the cancel button
 import { CancelOrderButton } from "./CancelOrderButton";
+import { ReviewModal } from "./ReviewModal";
 
+// Ensure this is the DEFAULT export and outside any other function
 export default async function CustomerOrdersPage() {
   const { data: sessionData } = await userService.getSession();
   const currentUser = sessionData?.user;
@@ -74,32 +72,32 @@ export default async function CustomerOrdersPage() {
                   <td className="p-4 font-mono text-xs uppercase text-muted-foreground">
                     {order.id.split("-")[0]}...
                   </td>
-
                   <td className="p-4 font-medium">
                     {order.orderItems
                       ?.map((item: any) => item.medicine?.name)
                       .join(", ") || "N/A"}
                   </td>
-
                   <td className="p-4">
                     {order.orderItems?.reduce(
                       (acc: number, item: any) => acc + (item.quantity || 0),
                       0,
                     )}
                   </td>
-
                   <td className="p-4 font-semibold">
                     ${order.totalPrice.toFixed(2)}
                   </td>
-
                   <td className="p-4">
                     <div className="flex items-center gap-3">
                       <Badge
                         variant={
-                          order.status === "SHIPPED" ? "outline" : "secondary"
+                          order.status === "SHIPPED" ||
+                          order.status === "DELIVERED"
+                            ? "outline"
+                            : "secondary"
                         }
                         className={
-                          order.status === "SHIPPED"
+                          order.status === "SHIPPED" ||
+                          order.status === "DELIVERED"
                             ? "border-green-500 text-green-500"
                             : order.status === "CANCELLED"
                               ? "border-red-500 text-red-500"
@@ -111,6 +109,11 @@ export default async function CustomerOrdersPage() {
 
                       {order.status === "PLACED" && (
                         <CancelOrderButton orderId={order.id} />
+                      )}
+
+                      {(order.status === "SHIPPED" ||
+                        order.status === "DELIVERED") && (
+                        <ReviewModal orderItems={order.orderItems} />
                       )}
                     </div>
                   </td>

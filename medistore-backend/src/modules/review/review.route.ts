@@ -11,7 +11,7 @@ router.post(
   reviewController.createReview,
 );
 
-// get reviews -- customer
+// get reviews -- customer, admin
 router.get(
   "/review/",
   authMiddleware(UserRole.CUSTOMER, UserRole.ADMIN),

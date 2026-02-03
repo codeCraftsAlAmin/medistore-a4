@@ -11,6 +11,7 @@ import {
   LogOut,
   LayoutDashboard,
   Store,
+  Star,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/app/store/useAuth";
@@ -76,6 +77,12 @@ const Navbar = () => {
           url: "/customer/shop",
           description: "Buy your products.",
           icon: <ClipboardList className="size-5" />,
+        },
+        {
+          title: "My Reviews",
+          url: "/customer/reviews",
+          description: "Manage your ratings and feedback.",
+          icon: <Star className="size-5" />,
         },
       ],
     });

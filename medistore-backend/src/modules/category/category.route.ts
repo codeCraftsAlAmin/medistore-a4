@@ -7,7 +7,7 @@ const router = express.Router();
 // get categories -- admin
 router.get(
   "/categories/",
-  authMiddleware(UserRole.ADMIN),
+  authMiddleware(UserRole.ADMIN, UserRole.SELLER),
   categoryController.getCategories,
 );
 

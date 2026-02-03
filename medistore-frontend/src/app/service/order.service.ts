@@ -17,6 +17,7 @@ export const orderService = {
       });
 
       const response = await res.json();
+
       return res.ok
         ? { data: response.data, error: null }
         : { data: null, error: response };
@@ -52,11 +53,14 @@ export const orderService = {
     }
   },
 
-  createOrder: async function (orderData: any) {
+  createOrder: async function (orderData: {
+    address: string;
+    items: Array<{ medicineId: string; quantity: number }>;
+  }) {
     try {
       const cookieStore = await cookies();
       const res = await fetch(`${BACKEND_URL}/api/order/`, {
-        method: "POST", // Matches your router.post("/order/")
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
           Cookie: cookieStore.toString(),
@@ -76,13 +80,17 @@ export const orderService = {
   cancelOrder: async function (orderId: string) {
     try {
       const cookieStore = await cookies();
-      const res = await fetch(`${BACKEND_URL}/api/cancel/order/${orderId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Cookie: cookieStore.toString(),
+      // FIXED: Added /order/ prefix to match your backend route
+      const res = await fetch(
+        `${BACKEND_URL}/api/order/cancel/order/${orderId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Cookie: cookieStore.toString(),
+          },
         },
-      });
+      );
 
       const response = await res.json();
       return res.ok

@@ -16,14 +16,16 @@ const app: Application = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.all("/api/auth/*splat", toNodeHandler(auth));
-
 app.use(
   cors({
     origin: config.urls.frontend_url,
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization", "Cookie"],
   }),
 );
+
+app.all("/api/auth/*splat", toNodeHandler(auth));
 
 // base route
 app.get("/", (req: Request, res: Response) => {

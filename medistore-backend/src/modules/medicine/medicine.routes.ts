@@ -11,10 +11,10 @@ router.post(
   medicineController.createMedicine,
 );
 
-// get medicines -- admin, user
+// get medicines -- everyone
 router.get(
   "/medicine",
-  authentication(UserRole.ADMIN, UserRole.CUSTOMER, UserRole.SELLER),
+  // authentication(UserRole.ADMIN, UserRole.CUSTOMER, UserRole.SELLER),
   medicineController.getMedicines,
 );
 

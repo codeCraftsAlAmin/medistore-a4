@@ -84,7 +84,13 @@ const getOrderHandler = async (user: UserType) => {
       include: {
         orderItems: {
           select: {
-            medicineId: true,
+            quantity: true,
+            medicine: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
           },
         },
       },
@@ -99,6 +105,17 @@ const getOrderHandler = async (user: UserType) => {
           some: {
             medicine: {
               userId: user.id,
+            },
+          },
+        },
+      },
+      include: {
+        orderItems: {
+          include: {
+            medicine: {
+              select: {
+                name: true,
+              },
             },
           },
         },

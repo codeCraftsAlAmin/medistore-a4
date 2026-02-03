@@ -16,7 +16,6 @@ import {
 import { Label } from "@/components/ui/label";
 import { createOrderAction } from "@/app/actions/order.actions";
 import { Textarea } from "@/components/ui/textarea";
-// import { Textarea } from "@/components/ui/textarea";
 
 interface Medicine {
   id: string;

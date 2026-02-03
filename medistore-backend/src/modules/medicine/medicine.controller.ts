@@ -42,7 +42,11 @@ const getMedicines = async (
       category: req.query.category as string,
     };
 
-    const data = await medicineService.getMedicinesHandler(filters, options);
+    const data = await medicineService.getMedicinesHandler(
+      filters,
+      options,
+      req.user as UserType,
+    );
 
     res.status(200).json({
       ok: true,
