@@ -76,7 +76,7 @@ export function RegisterForm({
           email: value.email,
           password: value.password,
           role: value.role,
-          callbackURL: NEXT_PUBLIC_FRONTEND_URL,
+          callbackURL: `${NEXT_PUBLIC_FRONTEND_URL}/login`,
         } as any);
 
         if (error) {
@@ -89,8 +89,8 @@ export function RegisterForm({
           { id: toastId },
         );
 
-        // Redirect to login or verification page
-        router.push("/login");
+        // // Redirect to login or verification page
+        // router.push("/login");
       } catch (error) {
         console.error("Registration error:", error);
         toast.error("Something went wrong. Please try again.", { id: toastId });

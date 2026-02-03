@@ -24,6 +24,17 @@ import { useRouter } from "next/navigation";
 import * as z from "zod";
 import { useAuth } from "@/app/store/useAuth";
 import { authClient } from "@/lib/auth-client";
+import { useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Loader2 } from "lucide-react";
 
 const NEXT_PUBLIC_FRONTEND_URL = env.NEXT_PUBLIC_FRONTEND_URL;
 
@@ -39,6 +50,36 @@ export function LoginForm({
 }: React.ComponentProps<"div">) {
   const router = useRouter();
   const { setAuth } = useAuth();
+  const [isForgetPasswordOpen, setIsForgetPasswordOpen] = useState(false);
+  const [resetEmail, setResetEmail] = useState("");
+  const [isResetLoading, setIsResetLoading] = useState(false);
+
+  const handleForgetPassword = async () => {
+    if (!resetEmail) {
+      toast.error("Please enter your email address");
+      return;
+    }
+    setIsResetLoading(true);
+    try {
+      const { error } = await authClient.requestPasswordReset({
+        email: resetEmail,
+        redirectTo: `${NEXT_PUBLIC_FRONTEND_URL}/reset-password`,
+      });
+      if (error) {
+        toast.error(error.message || "Failed to send reset link");
+      } else {
+        toast.success("Reset link sent to your email!");
+        setIsForgetPasswordOpen(false);
+      }
+    } catch (error) {
+      console.error("Forgot password error:", error);
+      toast.error(
+        error instanceof Error ? error.message : "Failed to send reset link",
+      );
+    } finally {
+      setIsResetLoading(false);
+    }
+  };
 
   // Handle Google login
   const handleGoogleLogin = async () => {
@@ -88,6 +129,7 @@ export function LoginForm({
             {
               id: data.user.id,
               name: data.user.name,
+              email: data.user.email,
               role: (data.user as any).role as "ADMIN" | "SELLER" | "CUSTOMER",
             },
             data.token || "", // ✅ Correct - it's data.token, not data.session.token
@@ -158,8 +200,15 @@ export function LoginForm({
                     field.state.meta.isTouched && !field.state.meta.isValid;
                   return (
                     <Field data-invalid={isInvalid}>
-                      <div className="flex items-center">
+                      <div className="flex items-center justify-between">
                         <FieldLabel htmlFor={field.name}>Password</FieldLabel>
+                        <button
+                          type="button"
+                          onClick={() => setIsForgetPasswordOpen(true)}
+                          className="text-xs text-muted-foreground hover:text-primary transition-colors underline-offset-4 hover:underline"
+                        >
+                          Forgot password?
+                        </button>
                       </div>
                       <Input
                         type="password"
@@ -227,6 +276,56 @@ export function LoginForm({
           </form>
         </CardContent>
       </Card>
+
+      <Dialog
+        open={isForgetPasswordOpen}
+        onOpenChange={setIsForgetPasswordOpen}
+      >
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Forgot Password</DialogTitle>
+            <DialogDescription>
+              Enter your email address and we'll send you a link to reset your
+              password.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid gap-2">
+              <Label htmlFor="reset-email">Email</Label>
+              <Input
+                id="reset-email"
+                placeholder="m@example.com"
+                value={resetEmail}
+                onChange={(e) => setResetEmail(e.target.value)}
+                type="email"
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setIsForgetPasswordOpen(false)}
+              disabled={isResetLoading}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleForgetPassword}
+              disabled={isResetLoading}
+              className="gap-2"
+            >
+              {isResetLoading ? (
+                <>
+                  <Loader2 className="size-4 animate-spin" />
+                  Sending...
+                </>
+              ) : (
+                "Send Reset Link"
+              )}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

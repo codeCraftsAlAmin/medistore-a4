@@ -12,7 +12,7 @@ interface User {
 interface AuthState {
   user: User | null;
   token: string | null;
-  isAuthenticated: boolean; // Fixed: Explicitly added here
+  isAuthenticated: boolean; 
   setAuth: (user: User, token: string) => void;
   logout: () => void;
 }
@@ -22,7 +22,7 @@ export const useAuth = create<AuthState>()(
     (set) => ({
       user: null,
       token: null,
-      isAuthenticated: false, // Initial state
+      isAuthenticated: false, 
       setAuth: (user, token) =>
         set({
           user,
