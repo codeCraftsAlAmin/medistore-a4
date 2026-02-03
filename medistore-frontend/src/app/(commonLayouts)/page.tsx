@@ -51,7 +51,9 @@ export default async function Home({
       <section className="bg-white border-b dark:bg-zinc-900 dark:border-zinc-800">
         <div className="container mx-auto px-4 py-16 text-center">
           <HeroBadge variant="secondary">
-            {session ? `Welcome back, ${session.name}` : "Welcome to medStore"}
+            {session?.user
+              ? `Welcome back, ${session.user.name}`
+              : "Welcome to medStore"}
           </HeroBadge>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-zinc-900 dark:text-white mt-4 mb-6">
             Your Trusted <span className="text-primary">Digital Pharmacy</span>
@@ -66,7 +68,7 @@ export default async function Home({
                 Shop Now <ShoppingBag className="ml-2 h-5 w-5" />
               </Link>
             </Button>
-            {!session && (
+            {!session?.user && (
               <Button size="lg" variant="outline" asChild>
                 <Link href="/register">Partner with Us</Link>
               </Button>

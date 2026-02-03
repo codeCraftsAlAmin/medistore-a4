@@ -71,7 +71,10 @@ export function OrderTable({ orders }: { orders: any[] }) {
         <TableHeader className="bg-white/5">
           <TableRow className="border-white/5 hover:bg-transparent">
             <TableHead className="py-6 pl-8 text-primary font-bold uppercase tracking-widest text-[10px]">
-              ID & Customer
+              Order ID
+            </TableHead>
+            <TableHead className="py-6 text-primary font-bold uppercase tracking-widest text-[10px]">
+              Customer Details
             </TableHead>
             <TableHead className="py-6 text-primary font-bold uppercase tracking-widest text-[10px]">
               Delivery Address
@@ -107,14 +110,20 @@ export function OrderTable({ orders }: { orders: any[] }) {
                 className="border-white/5 hover:bg-white/[0.02] group transition-colors"
               >
                 <TableCell className="py-6 pl-8 align-middle">
+                  <div className="flex items-center gap-2 text-[10px] font-mono text-muted-foreground group-hover:text-primary transition-colors">
+                    <Hash className="size-3" />
+                    {order.id.slice(-6).toUpperCase()}
+                  </div>
+                </TableCell>
+
+                <TableCell className="py-6 align-middle">
                   <div className="space-y-1">
-                    <div className="flex items-center gap-2 text-[10px] font-mono text-muted-foreground group-hover:text-primary transition-colors">
-                      <Hash className="size-3" />
-                      {order.id.slice(-6).toUpperCase()}
-                    </div>
                     <div className="flex items-center gap-2 text-sm font-bold text-white">
                       <User className="size-3 text-primary/50" />
-                      {order.userId.slice(-6).toUpperCase()}
+                      {order.user?.name || "Unknown"}
+                    </div>
+                    <div className="text-[10px] text-slate-400 font-medium lowercase">
+                      {order.user?.email || "No email"}
                     </div>
                   </div>
                 </TableCell>

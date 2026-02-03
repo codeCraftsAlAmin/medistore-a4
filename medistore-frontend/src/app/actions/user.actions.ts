@@ -5,6 +5,7 @@ import { userService } from "@/app/service/user.service";
 export async function updateProfileAction(formData: {
   id: string;
   name: string;
+  email: string;
 }) {
   try {
     const res = await fetch(
@@ -15,7 +16,7 @@ export async function updateProfileAction(formData: {
           "Content-Type": "application/json",
         },
         credentials: "include",
-        body: JSON.stringify({ name: formData.name }),
+        body: JSON.stringify({ name: formData.name, email: formData.email }),
       },
     );
 

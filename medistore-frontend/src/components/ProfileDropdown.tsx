@@ -38,6 +38,7 @@ export function ProfileDropdown() {
   const router = useRouter();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [newName, setNewName] = useState(user?.name || "");
+  const [newEmail, setNewEmail] = useState(user?.email || "");
   const [isLoading, setIsLoading] = useState(false);
 
   if (!user) return null;
@@ -58,6 +59,7 @@ export function ProfileDropdown() {
       const result = await updateProfileAction({
         id: user.id,
         name: newName.trim(),
+        email: newEmail.trim(),
       });
 
       if (result.error) {
@@ -67,7 +69,10 @@ export function ProfileDropdown() {
         // Update local auth state if possible, though router.refresh()
         // might be needed for server components
         if (token) {
-          setAuth({ ...user, name: newName.trim() }, token);
+          setAuth(
+            { ...user, name: newName.trim(), email: newEmail.trim() },
+            token,
+          );
         }
         setIsDialogOpen(false);
         router.refresh();
@@ -141,6 +146,17 @@ export function ProfileDropdown() {
                 value={newName}
                 onChange={(e) => setNewName(e.target.value)}
                 placeholder="Enter your name"
+                className="bg-zinc-950/50 border-white/10"
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="email">Email Address</Label>
+              <Input
+                id="email"
+                type="email"
+                value={newEmail}
+                onChange={(e) => setNewEmail(e.target.value)}
+                placeholder="Enter your email"
                 className="bg-zinc-950/50 border-white/10"
               />
             </div>

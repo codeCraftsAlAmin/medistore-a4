@@ -41,7 +41,7 @@ export default async function MedicinePage({
     userService.getSession(),
   ]);
 
-  const userRole = sessionRes?.data?.role;
+  const userRole = sessionRes?.data?.user?.role;
 
   // Handle medicine fetch errors
   if (medRes.error) {
@@ -63,11 +63,10 @@ export default async function MedicinePage({
         </div>
 
         {/* Pass the corrected data */}
-        {userRole === "seller" && (
+        {userRole === "SELLER" && (
           <AddMedicineModal categories={catRes.data || []} />
         )}
       </div>
-
       <MedicineFilters />
 
       <MedicineList
