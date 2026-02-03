@@ -29,14 +29,31 @@ export const auth = betterAuth({
     enabled: true,
     autoSignIn: false,
     requireEmailVerification: true,
+    sendResetPassword: async ({ user, url }) => {
+      await sendEmail({
+        user,
+        url,
+        subject: "Reset your password",
+        title: "Password reset request",
+        buttonText: "Reset Password",
+      });
+    },
+    onPasswordReset: async ({ user }, request) => {
+      console.log(`Password for user ${user.email} has been reset.`);
+    },
   },
   emailVerification: {
     autoSignInAfterVerification: true,
-    sendOnSignUp: true, // send email wihile signing up
-    // verifyEmailRedirectPath: "/login?verified=true",
-    
+    sendOnSignUp: true,
+
     sendVerificationEmail: async ({ user, url }) => {
-      sendEmail({ user, url });
+      await sendEmail({
+        user,
+        url,
+        subject: "Verify your account",
+        title: "Welcome to mediStore",
+        buttonText: "Verify Email",
+      });
     },
   },
   // # gmail verification
