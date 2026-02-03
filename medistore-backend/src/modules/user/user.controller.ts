@@ -60,11 +60,12 @@ const updateProfile = async (
 ) => {
   try {
     const { id } = req.params;
-    const { name } = req.body;
+    const { name, email } = req.body;
     const user = req.user;
     const data = await userService.manageProfileHandler(
       id as string,
       name as string,
+      email as string,
       user as UserType,
     );
 

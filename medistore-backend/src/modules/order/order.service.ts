@@ -1,3 +1,4 @@
+import { includes } from "better-auth/*";
 import { OrderStatus } from "../../../generated/prisma/enums";
 import { prisma } from "../../lib/prisma";
 import { UserType } from "../../types";
@@ -110,6 +111,10 @@ const getOrderHandler = async (user: UserType) => {
         },
       },
       include: {
+        user: {select: {
+          name: true,
+          email: true
+        }},
         orderItems: {
           include: {
             medicine: {

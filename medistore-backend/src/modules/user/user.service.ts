@@ -105,6 +105,7 @@ const updateStatusHandler = async (userId: string, status: UserStatus) => {
 const manageProfileHandler = async (
   id: string,
   name: string,
+  email: string,
   user: UserType,
 ) => {
   if (!id) {
@@ -121,6 +122,7 @@ const manageProfileHandler = async (
     },
     data: {
       name: name,
+      email: email,
     },
   });
 
