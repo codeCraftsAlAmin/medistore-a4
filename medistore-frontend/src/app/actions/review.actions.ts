@@ -11,8 +11,9 @@ export async function handleCreateReview(
     const result = await reviewService.createReview(medicineId, payload);
 
     if (result.success) {
-      // Revalidate the orders page to show updated data
+      // Revalidate paths to show updated data
       revalidatePath("/customer/orders");
+      revalidatePath("/customer/reviews");
     }
 
     return result;
