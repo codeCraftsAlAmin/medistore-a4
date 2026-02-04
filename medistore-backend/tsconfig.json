@@ -7,7 +7,7 @@
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
-    "module": "ESNext",
+    "module": "CommonJS",
     "target": "ES2023",
     "types": ["node"],
     // For nodejs:
@@ -45,5 +45,5 @@
     "skipLibCheck": true
   },
   "include": ["**/*.ts"],
-  "exclude": ["node_modules", "dist", "generated/prisma"]
+  "exclude": ["node_modules", "dist", "generated/prisma", "prisma.config.ts"]
 }
