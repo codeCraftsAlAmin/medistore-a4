@@ -42,7 +42,6 @@ export default async function MedicinePage({
   ]);
 
   const userRole = sessionRes?.data?.user?.role;
-
   // Handle medicine fetch errors
   if (medRes.error) {
     return (
