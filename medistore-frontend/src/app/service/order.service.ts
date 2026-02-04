@@ -81,16 +81,13 @@ export const orderService = {
     try {
       const cookieStore = await cookies();
       // FIXED: Added /order/ prefix to match your backend route
-      const res = await fetch(
-        `${BACKEND_URL}/api/order/cancel/order/${orderId}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Cookie: cookieStore.toString(),
-          },
+      const res = await fetch(`${BACKEND_URL}/api/cancel/order/${orderId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Cookie: cookieStore.toString(),
         },
-      );
+      });
 
       const response = await res.json();
       return res.ok
