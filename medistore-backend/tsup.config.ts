@@ -10,11 +10,12 @@ export default defineConfig({
     /^express/,
     /^cors/,
     /^nodemailer/,
+    "pg-native",
   ],
   platform: "node",
   target: "esnext",
   bundle: true,
   splitting: false,
-  outDir: "dist",
+  outDir: "api",
   minify: false,
 });
