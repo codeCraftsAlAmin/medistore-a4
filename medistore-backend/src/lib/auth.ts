@@ -5,40 +5,66 @@ import config from "../config";
 import { sendEmail } from "./sendEmail";
 
 export const auth = betterAuth({
+  baseURL: config.auth.better_auth_url,
   database: prismaAdapter(prisma, {
     provider: "postgresql",
   }),
-  // additional fields
+
+  // ? update trusted origin
+  trustedOrigins: async (request) => {
+    const origin = request?.headers.get("origin");
+
+    const allowedOrigins = [
+      config.urls.frontend_url,
+      config.auth.better_auth_url,
+      "http://localhost:3000",
+      "http://localhost:5000",
+    ].filter(Boolean);
+
+    // Check if origin matches allowed origins or Vercel pattern
+    if (
+      !origin ||
+      allowedOrigins.includes(origin) ||
+      /^https:\/\/.*\.vercel\.app$/.test(origin)
+    ) {
+      return [origin];
+    }
+
+    return [];
+  },
+
+  basePath: "/api/auth",
+  // ? additional fields
   user: {
     additionalFields: {
       role: {
-        type: ["ADMIN", "CUSTOMER", "SELLER"],
+        type: "string",
         required: false,
         defaultValue: "CUSTOMER",
       },
       status: {
-        type: ["BAN", "UNBAN"],
+        type: "string",
         required: false,
         defaultValue: "UNBAN",
       },
     },
   },
-  trustedOrigins: [config.urls.frontend_url],
+
   session: {
     cookieCache: {
       enabled: true,
-      maxAge: 5 * 60, // 5 minutes
+      maxAge: 5 * 60, // 5 mins
     },
   },
+
+  // ? update advance configue
   advanced: {
-    cookies: {
-      session_token: {
-        attributes: {
-          sameSite: "none",
-          secure: true,
-        },
-      },
+    cookiePrefix: "better-auth",
+    useSecureCookies: process.env.NODE_ENV === "production",
+    crossSubDomainCookies: {
+      enabled: false,
     },
+    disableCSRFCheck: true,
   },
   // # email and password verification
   emailAndPassword: {
@@ -75,7 +101,7 @@ export const auth = betterAuth({
   // # gmail verification
   socialProviders: {
     google: {
-      prompt: "select_account",
+      prompt: "select_account consent",
       accessType: "offline",
       clientId: config.google_credentials.client_id,
       clientSecret: config.google_credentials.client_secret,
