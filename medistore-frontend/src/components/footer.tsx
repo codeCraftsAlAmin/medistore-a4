@@ -76,22 +76,6 @@ export function Footer() {
                   <ExternalLink className="size-3" /> Medicines
                 </Link>
               </li>
-              <li>
-                <Link
-                  href="/about"
-                  className="text-muted-foreground hover:text-primary transition-colors text-sm flex items-center gap-2"
-                >
-                  <ExternalLink className="size-3" /> About Us
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/contact"
-                  className="text-muted-foreground hover:text-primary transition-colors text-sm flex items-center gap-2"
-                >
-                  <ExternalLink className="size-3" /> Contact
-                </Link>
-              </li>
             </ul>
           </div>
 
@@ -166,32 +150,12 @@ export function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-center items-center gap-4">
           <p className="text-xs text-muted-foreground">
             © {currentYear}{" "}
             <span className="text-white font-medium">mediStore</span>. All
             rights reserved.
           </p>
-          <div className="flex gap-8">
-            <Link
-              href="/privacy"
-              className="text-xs text-muted-foreground hover:text-white transition-colors"
-            >
-              Privacy Policy
-            </Link>
-            <Link
-              href="/terms"
-              className="text-xs text-muted-foreground hover:text-white transition-colors"
-            >
-              Terms of Service
-            </Link>
-            <Link
-              href="/cookies"
-              className="text-xs text-muted-foreground hover:text-white transition-colors"
-            >
-              Cookie Policy
-            </Link>
-          </div>
         </div>
       </div>
     </footer>
