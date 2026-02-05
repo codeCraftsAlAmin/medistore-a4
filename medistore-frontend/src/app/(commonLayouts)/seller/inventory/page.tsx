@@ -13,6 +13,8 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 
+export const dynamic = "force-dynamic";
+
 export default async function ManageInventoryPage() {
   // 1. Get the session from your backend via your service
   const { data: sessionData, error: sessionError } =

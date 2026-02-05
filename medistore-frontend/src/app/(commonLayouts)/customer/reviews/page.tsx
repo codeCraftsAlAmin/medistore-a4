@@ -6,6 +6,8 @@ import { Badge } from "@/components/ui/badge";
 import { revalidatePath } from "next/cache";
 import { Card, CardContent } from "@/components/ui/card";
 
+export const dynamic = "force-dynamic";
+
 export default async function MyReviewsPage() {
   const { data: sessionData } = await userService.getSession();
   const currentUser = sessionData?.user;
@@ -36,7 +38,9 @@ export default async function MyReviewsPage() {
         {reviewsToDisplay.length === 0 ? (
           <div className="text-center py-24 border border-dashed rounded-xl bg-card/50">
             <MessageSquare className="mx-auto h-12 w-12 text-muted-foreground/30" />
-            <p className="mt-4 text-muted-foreground font-medium">No reviews documented yet.</p>
+            <p className="mt-4 text-muted-foreground font-medium">
+              No reviews documented yet.
+            </p>
           </div>
         ) : (
           reviewsToDisplay.map((review: any) => (
@@ -54,14 +58,19 @@ export default async function MyReviewsPage() {
                       <h3 className="font-semibold text-lg leading-tight text-white">
                         {review.medicine?.name || "Product"}
                       </h3>
-                      <Badge variant="secondary" className="mt-2 text-[10px] uppercase tracking-wider">
+                      <Badge
+                        variant="secondary"
+                        className="mt-2 text-[10px] uppercase tracking-wider"
+                      >
                         Verified Purchase
                       </Badge>
                     </div>
                   </div>
                   <div className="pt-4 mt-4 flex items-center gap-2 text-muted-foreground">
                     <Calendar className="h-3 w-3" />
-                    <p className="text-xs">{new Date(review.createdAt).toLocaleDateString()}</p>
+                    <p className="text-xs">
+                      {new Date(review.createdAt).toLocaleDateString()}
+                    </p>
                   </div>
                 </div>
 
@@ -78,8 +87,12 @@ export default async function MyReviewsPage() {
                       </div>
                       <div className="flex items-center gap-3">
                         <div className="text-right">
-                          <p className="text-xs font-medium text-white">{review.user?.name || "User"}</p>
-                          <p className="text-[10px] text-muted-foreground">Reviewer</p>
+                          <p className="text-xs font-medium text-white">
+                            {review.user?.name || "User"}
+                          </p>
+                          <p className="text-[10px] text-muted-foreground">
+                            Reviewer
+                          </p>
                         </div>
                         <div className="w-8 h-8 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold text-xs border border-primary/30">
                           {review.user?.name?.[0]?.toUpperCase() || "U"}
@@ -94,7 +107,11 @@ export default async function MyReviewsPage() {
                   <div className="flex justify-end mt-6">
                     {review.userId === currentUser?.id && (
                       <form action={handleDelete}>
-                        <input type="hidden" name="reviewId" value={review.id} />
+                        <input
+                          type="hidden"
+                          name="reviewId"
+                          value={review.id}
+                        />
                         <Button
                           variant="ghost"
                           size="sm"
