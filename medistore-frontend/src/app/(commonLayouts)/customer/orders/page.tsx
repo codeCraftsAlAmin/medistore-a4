@@ -53,6 +53,8 @@ const statusConfig = {
   },
 } as const;
 
+export const dynamic = "force-dynamic";
+
 export default async function CustomerOrdersPage() {
   const { data: sessionData } = await userService.getSession();
   const currentUser = sessionData?.user;
@@ -114,10 +116,12 @@ export default async function CustomerOrdersPage() {
           <div className="p-6 rounded-full bg-white/5 mb-6">
             <Package className="h-12 w-12 text-muted-foreground/50" />
           </div>
-          <h3 className="text-xl font-bold text-white mb-2 font-sans">No orders yet</h3>
+          <h3 className="text-xl font-bold text-white mb-2 font-sans">
+            No orders yet
+          </h3>
           <p className="text-muted-foreground text-center max-w-xs px-4">
-            Looks like you haven't placed any orders. Start shopping to find
-            the best medicines!
+            Looks like you haven't placed any orders. Start shopping to find the
+            best medicines!
           </p>
         </div>
       ) : (
@@ -223,9 +227,9 @@ export default async function CustomerOrdersPage() {
                           order.status === "DELIVERED") && (
                           <ReviewModal orderItems={order.orderItems} />
                         )}
-                        
+
                         <div className="p-2 rounded-lg bg-white/5 border border-white/5 opacity-0 group-hover:opacity-100 transition-opacity">
-                           <Hash className="size-3.5 text-muted-foreground" />
+                          <Hash className="size-3.5 text-muted-foreground" />
                         </div>
                       </div>
                     </TableCell>

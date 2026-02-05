@@ -3,6 +3,8 @@ import { FolderTree, LayoutGrid } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { CategoryManagement } from "@/components/admin/CategoryManagement";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminCategoriesPage() {
   const { data: categoriesResponse } = await medicineService.getCategories();
   const categories = categoriesResponse || [];
