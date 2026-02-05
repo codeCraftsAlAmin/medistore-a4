@@ -7,9 +7,11 @@
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
-    "module": "CommonJS",
+    "module": "ESNext",
     "target": "ES2023",
     "types": ["node"],
+    "moduleResolution": "bundler",
+    "esModuleInterop": true,
     // For nodejs:
     // "lib": ["esnext"],
     // "types": ["node"],
@@ -39,8 +41,8 @@
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
-    "moduleResolution": "node",
-    "esModuleInterop": true,
+    // "moduleResolution": "node",
+    // "esModuleInterop": true,
     // "ignoreDeprecations": "6.0",
     "skipLibCheck": true
   },
