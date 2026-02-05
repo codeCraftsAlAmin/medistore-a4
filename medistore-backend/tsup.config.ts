@@ -7,7 +7,6 @@ export default defineConfig({
   external: [
     /^dotenv/,
     /^@prisma/,
-    /^better-auth/,
     /^express/,
     /^cors/,
     /^nodemailer/,
