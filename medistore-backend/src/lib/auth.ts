@@ -24,6 +24,22 @@ export const auth = betterAuth({
     },
   },
   trustedOrigins: [config.urls.frontend_url],
+  session: {
+    cookieCache: {
+      enabled: true,
+      maxAge: 5 * 60, // 5 minutes
+    },
+  },
+  advanced: {
+    cookies: {
+      session_token: {
+        attributes: {
+          sameSite: "none",
+          secure: true,
+        },
+      },
+    },
+  },
   // # email and password verification
   emailAndPassword: {
     enabled: true,
