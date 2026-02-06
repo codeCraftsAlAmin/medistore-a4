@@ -1,11 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Pill, Search, ShoppingBag, ArrowRight } from "lucide-react";
+import { Pill, Search, ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 import { MedicineList } from "@/components/ui/medicine-list";
 import { userService } from "../service/user.service";
 import { medicineService } from "../service/medicine.service";
+import { HealthTips } from "@/components/home/health-tips";
+import { Newsletter } from "@/components/home/newsletter";
 
 function HeroBadge({
   children,
@@ -141,6 +143,9 @@ export default async function Home({
           </div>
         )}
       </section>
+
+      <HealthTips />
+      <Newsletter />
     </div>
   );
 }
