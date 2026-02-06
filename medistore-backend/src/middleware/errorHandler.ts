@@ -21,7 +21,7 @@ export default function errorHandler(
       "Validation Error: Please check your input fields and data types";
   }
 
-  //    prisma known req errors
+  // prisma known req errors
   else if (error instanceof Prisma.PrismaClientKnownRequestError) {
     switch (error.code) {
       case "P2002":

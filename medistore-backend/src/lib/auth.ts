@@ -21,7 +21,7 @@ export const auth = betterAuth({
       "http://localhost:5000",
     ].filter(Boolean);
 
-    // Check if origin matches allowed origins or Vercel pattern
+    // check if origin matches allowed origins or Vercel pattern
     if (
       !origin ||
       allowedOrigins.includes(origin) ||

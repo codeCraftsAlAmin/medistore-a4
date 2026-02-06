@@ -29,9 +29,9 @@ const authMiddleware = (...role: UserRole[]) => {
 
     // if session not found
     if (!session) {
-      return res.status(404).json({
+      return res.status(401).json({
         ok: false,
-        message: "You are not authorized!!",
+        message: "Unauthorized access",
       });
     }
 

@@ -16,25 +16,24 @@ const app: Application = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Configure CORS to allow both production and Vercel preview deployments
 const allowedOrigins = [
   config.urls.frontend_url,
   config.urls.backend_url,
   "http://localhost:3000",
   "http://localhost:5000",
-].filter(Boolean); // Remove undefined values
+].filter(Boolean);
 
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Allow requests with no origin (mobile apps, Postman, etc.)
+
       if (!origin) return callback(null, true);
 
-      // Check if origin is in allowedOrigins or matches Vercel pattern
+      // check if origin is in allowedOrigins or matches Vercel pattern
       const isAllowed =
         allowedOrigins.includes(origin) ||
         /^https:\/\/medistore-.*\.vercel\.app$/.test(origin) ||
-        /^https:\/\/.*\.vercel\.app$/.test(origin); // Any Vercel deployment
+        /^https:\/\/.*\.vercel\.app$/.test(origin); // any vercel deployment
 
       if (isAllowed) {
         callback(null, true);
