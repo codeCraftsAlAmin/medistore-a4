@@ -8,7 +8,6 @@ export const userService = {
   getSession: async function () {
     try {
       const cookieStore = await cookies();
-      // console.log(cookieStore.toString());
 
       const res = await fetch(
         `${NEXT_PUBLIC_BACKEND_URL}/api/auth/get-session`,
@@ -28,7 +27,6 @@ export const userService = {
 
       return { data: session, error: null };
     } catch (error) {
-      console.log(error);
       return { data: null, error: { message: "Something went wrong" } };
     }
   },

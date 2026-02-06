@@ -81,23 +81,21 @@ export function LoginForm({
     }
   };
 
-  // Handle Google login
-  const handleGoogleLogin = async () => {
-    try {
-      const data = await authClient.signIn.social({
-        provider: "google",
-        callbackURL: NEXT_PUBLIC_FRONTEND_URL,
-      });
+  // ! Handle Google login
+  // const handleGoogleLogin = async () => {
+  //   try {
+  //     const data = await authClient.signIn.social({
+  //       provider: "google",
+  //       callbackURL: NEXT_PUBLIC_FRONTEND_URL,
+  //     });
 
-      console.log("Google login response:", data);
-
-      // After successful Google login, the user will be redirected
-      // and the session will be available
-    } catch (error) {
-      console.error("Google login error:", error);
-      toast.error("Failed to login with Google. Please try again.");
-    }
-  };
+  //     // After successful Google login, the user will be redirected
+  //     // and the session will be available
+  //   } catch (error) {
+  //     console.error("Google login error:", error);
+  //     toast.error("Failed to login with Google. Please try again.");
+  //   }
+  // };
 
   // Configure TanStack Form
   const form = useForm({
@@ -238,7 +236,8 @@ export function LoginForm({
                   {form.state.isSubmitting ? "Logging in..." : "Login"}
                 </Button>
 
-                <Button
+                {/* ! something went wrong with google login */}
+                {/* <Button
                   onClick={handleGoogleLogin}
                   variant="outline"
                   type="button"
@@ -260,7 +259,7 @@ export function LoginForm({
                     ></path>
                   </svg>
                   Login with Google
-                </Button>
+                </Button> */}
 
                 <FieldDescription className="text-center">
                   Don&apos;t have an account?{" "}

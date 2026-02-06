@@ -4,7 +4,6 @@ import { medicineService } from "@/app/service/medicine.service";
 import { userService } from "@/app/service/user.service";
 import { revalidatePath } from "next/cache";
 
-// ✅ ADDED THIS: This fixes the "no exported member" error in your Modal
 export async function createMedicineAction(formData: any) {
   const result = await medicineService.createMedicine(formData);
 

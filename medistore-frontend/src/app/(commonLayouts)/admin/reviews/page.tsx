@@ -10,7 +10,7 @@ import {
   CardContent,
 } from "@/components/ui/card";
 
-import { toast } from "sonner"; // Note: Use client component for delete button if toast is needed
+import { toast } from "sonner"; 
 
 export default async function AdminReviewsPage() {
   const { data: allReviews } = await reviewService.getMyReviews();

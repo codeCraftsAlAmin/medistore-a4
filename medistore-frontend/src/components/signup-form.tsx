@@ -40,22 +40,23 @@ export function RegisterForm({
 }: React.ComponentProps<"div">) {
   const router = useRouter();
 
-  // Handle Google signup
-  const handleGoogleSignup = async () => {
-    try {
-      const data = await authClient.signIn.social({
-        provider: "google",
-        callbackURL: NEXT_PUBLIC_FRONTEND_URL,
-      });
+  // ! Handle Google signup
+  // const handleGoogleSignup = async () => {
+  //   try {
+  //     const data = await authClient.signIn.social({
+  //       provider: "google",
+  //       callbackURL: NEXT_PUBLIC_FRONTEND_URL,
+  //     });
 
-      console.log("Google signup response:", data);
-    } catch (error) {
-      console.error("Google signup error:", error);
-      toast.error("Failed to sign up with Google. Please try again.");
-    }
-  };
+  //     console.log("Google signup response:", data);
+  //   } catch (error) {
+  //     console.error("Google signup error:", error);
+  //     toast.error("Failed to sign up with Google. Please try again.");
+  //   }
+  // };
 
   // Configure TanStack Form
+  
   const form = useForm({
     defaultValues: {
       name: "",
@@ -89,8 +90,6 @@ export function RegisterForm({
           { id: toastId },
         );
 
-        // // Redirect to login or verification page
-        // router.push("/login");
       } catch (error) {
         console.error("Registration error:", error);
         toast.error("Something went wrong. Please try again.", { id: toastId });
@@ -265,7 +264,8 @@ export function RegisterForm({
                   {form.state.isSubmitting ? "Creating account..." : "Register"}
                 </Button>
 
-                <Button
+                {/* ! something went wrong with google login */}
+                {/* <Button
                   onClick={handleGoogleSignup}
                   variant="outline"
                   type="button"
@@ -287,7 +287,7 @@ export function RegisterForm({
                     ></path>
                   </svg>
                   Continue with Google
-                </Button>
+                </Button> */}
 
                 <FieldDescription className="text-center">
                   Already have an account?{" "}

@@ -1,7 +1,5 @@
 "use client";
 
-import { userService } from "@/app/service/user.service";
-
 export async function updateProfileAction(formData: {
   id: string;
   name: string;

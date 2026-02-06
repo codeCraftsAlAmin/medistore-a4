@@ -4,10 +4,6 @@ import { revalidatePath } from "next/cache";
 import { orderService } from "../service/order.service";
 import { redirect } from "next/navigation";
 
-/**
- * Create a new order
- * Backend expects: { address: string, items: [{medicineId: string, quantity: number}] }
- */
 export async function createOrderAction(orderData: {
   medicineId: string;
   quantity: number;
@@ -35,9 +31,6 @@ export async function createOrderAction(orderData: {
   return res;
 }
 
-/**
- * Update order status (for sellers)
- */
 export async function updateOrderStatusAction(orderId: string, status: string) {
   const res = await orderService.updateOrderStatus(orderId, status);
 
@@ -49,9 +42,6 @@ export async function updateOrderStatusAction(orderId: string, status: string) {
   return res;
 }
 
-/**
- * Cancel an order (for customers)
- */
 export async function handleCancelOrder(orderId: string) {
   const res = await orderService.cancelOrder(orderId);
 

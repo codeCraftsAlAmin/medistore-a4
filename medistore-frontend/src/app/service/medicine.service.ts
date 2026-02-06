@@ -67,7 +67,6 @@ export const medicineService = {
 
       return { data: response.data, error: null };
     } catch (error) {
-      console.error("Get medicines error:", error);
       return {
         data: null,
         error: {
@@ -144,7 +143,6 @@ export const medicineService = {
         error: null,
       };
     } catch (error) {
-      console.error("Category Fetch Error:", error);
       return {
         data: null,
         error: error instanceof Error ? error.message : "Something went wrong",

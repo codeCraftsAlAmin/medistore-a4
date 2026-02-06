@@ -15,7 +15,7 @@ export function CancelOrderButton({ orderId }: { orderId: string }) {
     const result = await handleCancelOrder(orderId);
 
     if (result.success) {
-      router.refresh(); // This triggers a re-fetch of server component data
+      router.refresh(); 
     } else {
       alert(result.error?.message || "Failed to cancel order");
     }
