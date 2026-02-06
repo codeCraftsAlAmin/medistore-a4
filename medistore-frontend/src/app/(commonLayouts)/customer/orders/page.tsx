@@ -151,9 +151,8 @@ export default async function CustomerOrdersPage() {
             </TableHeader>
             <TableBody>
               {myOrders.map((order: any) => {
-                const status =
-                  (order.status as keyof typeof statusConfig) || "PLACED";
-                const config = statusConfig[status];
+                const statusKey = order.status as keyof typeof statusConfig;
+                const config = statusConfig[statusKey] || statusConfig.PLACED;
                 const itemCount = order.orderItems?.reduce(
                   (acc: number, item: any) => acc + (item.quantity || 0),
                   0,

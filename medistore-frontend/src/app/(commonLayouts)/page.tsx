@@ -63,11 +63,6 @@ export default async function Home({
             products. Delivered directly to your doorstep with expert care.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Button size="lg" asChild shadow-lg="true">
-              <Link href="/customer/shop">
-                Shop Now <ShoppingBag className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
             {!session?.user && (
               <Button size="lg" variant="outline" asChild>
                 <Link href="/register">Partner with Us</Link>
